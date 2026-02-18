@@ -17,7 +17,7 @@
 */
 historical_elite('ITA', 'Fencing', 20.12).
 historical_elite('USA', 'Swimming', 34.80).
-historical_elite('USA', 'Golf', 70.69).33
+historical_elite('USA', 'Golf', 70.69).
 historical_elite('CHN', 'Table Tennis', 45.61).
 historical_elite('JAM', 'Athletics', 30.00).
 historical_elite('JPN', 'Judo', 38.00).
