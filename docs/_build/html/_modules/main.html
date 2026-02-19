@@ -97,12 +97,11 @@
 <span class="sd">    Supporta la validazione di:</span>
 
 <span class="sd">    * **Sesso**: (M/F)</span>
-<span class="sd">    * **Dati numerici**: in un range definito</span>
 <span class="sd">    * **Codici nazione (NOC)**: presenti nel dataset</span>
 <span class="sd">    * **Nomi degli sport**: con correzione automatica tramite Fuzzy Matching</span>
 
 <span class="sd">    :param messaggio: Testo da mostrare all&#39;utente.</span>
-<span class="sd">    :param tipo: Tipo di dato atteso (&#39;sex&#39;, &#39;numeric&#39;, &#39;noc&#39;, &#39;sport&#39;).</span>
+<span class="sd">    :param tipo: Tipo di dato atteso (&#39;sex&#39;, &#39;noc&#39;, &#39;sport&#39;).</span>
 <span class="sd">    :param range_val: Tuple (min, max) per i valori numerici.</span>
 <span class="sd">    :param opzioni: Lista di valori validi (per NOC e Sport).</span>
 <span class="sd">    :return: Il valore validato e normalizzato.</span>
@@ -114,10 +113,6 @@
                 <span class="n">valore</span> <span class="o">=</span> <span class="n">valore</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
                 <span class="k">if</span> <span class="n">valore</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">]:</span> <span class="k">return</span> <span class="n">valore</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[!] Inserisci &#39;M&#39; o &#39;F&#39;.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">tipo</span> <span class="o">==</span> <span class="s2">&quot;numeric&quot;</span><span class="p">:</span>
-                <span class="n">num</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">valore</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">range_val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">num</span> <span class="o">&lt;=</span> <span class="n">range_val</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="k">return</span> <span class="n">num</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[!] Valore fuori range (</span><span class="si">{</span><span class="n">range_val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">range_val</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">).</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">tipo</span> <span class="o">==</span> <span class="s2">&quot;noc&quot;</span><span class="p">:</span>
                 <span class="n">valore</span> <span class="o">=</span> <span class="n">valore</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
                 <span class="k">if</span> <span class="n">valore</span> <span class="ow">in</span> <span class="n">opzioni</span><span class="p">:</span> <span class="k">return</span> <span class="n">valore</span>
@@ -147,7 +142,6 @@
 <span class="sd">    * **Modello Naive Bayes**: (Probabilistico).</span>
 
 <span class="sd">    :return: Dizionario contenente tutti gli oggetti joblib caricati.</span>
-<span class="sd">    :raises SystemExit: Se uno dei file critici non viene trovato.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">base_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
     <span class="n">path_supervisionato</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_path</span><span class="p">,</span> <span class="s1">&#39;apprendimento_supervisionato&#39;</span><span class="p">,</span> <span class="s1">&#39;modelli&#39;</span><span class="p">)</span>

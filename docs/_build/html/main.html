@@ -116,7 +116,6 @@ la nazione con la probabilità più alta di vittoria storica.</p>
 <p>Supporta la validazione di:</p>
 <ul class="simple">
 <li><p><strong>Sesso</strong>: (M/F)</p></li>
-<li><p><strong>Dati numerici</strong>: in un range definito</p></li>
 <li><p><strong>Codici nazione (NOC)</strong>: presenti nel dataset</p></li>
 <li><p><strong>Nomi degli sport</strong>: con correzione automatica tramite Fuzzy Matching</p></li>
 </ul>
@@ -124,7 +123,7 @@ la nazione con la probabilità più alta di vittoria storica.</p>
 <dt class="field-odd">Parametri<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>messaggio</strong> – Testo da mostrare all’utente.</p></li>
-<li><p><strong>tipo</strong> – Tipo di dato atteso (“sex”, “numeric”, “noc”, “sport”).</p></li>
+<li><p><strong>tipo</strong> – Tipo di dato atteso (“sex”, “noc”, “sport”).</p></li>
 <li><p><strong>range_val</strong> – Tuple (min, max) per i valori numerici.</p></li>
 <li><p><strong>opzioni</strong> – Lista di valori validi (per NOC e Sport).</p></li>
 </ul>
@@ -172,9 +171,6 @@ logiche definite in Prolog per fornire:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Ritorna<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Dizionario contenente tutti gli oggetti joblib caricati.</p>
-</dd>
-<dt class="field-even">Solleva<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>SystemExit</strong> – Se uno dei file critici non viene trovato.</p>
 </dd>
 </dl>
 </dd></dl>
