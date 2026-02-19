@@ -19,8 +19,6 @@ def genera_report_leader():
     3. Raggruppa le medaglie per Sport e Nazione.
     4. Identifica la nazione con il maggior numero di medaglie.
     5. Calcola la 'Percentuale di Dominanza'.
-
-    :return: None
     """
     print("="*60)
     print("   ANALISI MEDAGLIERE: LEADER STORICI PER SPORT   ")

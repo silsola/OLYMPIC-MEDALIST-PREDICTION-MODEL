@@ -23,12 +23,11 @@ def get_input_validato(messaggio, tipo, range_val=None, opzioni=None):
     Supporta la validazione di:
 
     * **Sesso**: (M/F)
-    * **Dati numerici**: in un range definito
     * **Codici nazione (NOC)**: presenti nel dataset
     * **Nomi degli sport**: con correzione automatica tramite Fuzzy Matching
 
     :param messaggio: Testo da mostrare all'utente.
-    :param tipo: Tipo di dato atteso ('sex', 'numeric', 'noc', 'sport').
+    :param tipo: Tipo di dato atteso ('sex', 'noc', 'sport').
     :param range_val: Tuple (min, max) per i valori numerici.
     :param opzioni: Lista di valori validi (per NOC e Sport).
     :return: Il valore validato e normalizzato.
@@ -40,10 +39,6 @@ def get_input_validato(messaggio, tipo, range_val=None, opzioni=None):
                 valore = valore.upper()
                 if valore in ['M', 'F']: return valore
                 print("[!] Inserisci 'M' o 'F'.\n")
-            elif tipo == "numeric":
-                num = float(valore)
-                if range_val[0] <= num <= range_val[1]: return num
-                print(f"[!] Valore fuori range ({range_val[0]}-{range_val[1]}).\n")
             elif tipo == "noc":
                 valore = valore.upper()
                 if valore in opzioni: return valore
@@ -70,7 +65,6 @@ def load_resources():
     * **Modello Naive Bayes**: (Probabilistico).
 
     :return: Dizionario contenente tutti gli oggetti joblib caricati.
-    :raises SystemExit: Se uno dei file critici non viene trovato.
     """
     base_path = os.path.dirname(os.path.abspath(__file__))
     path_supervisionato = os.path.join(base_path, 'apprendimento_supervisionato', 'modelli')

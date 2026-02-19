@@ -18,6 +18,7 @@ def load_and_prepare_data(file_path):
     * Normalizza i nomi delle colonne.
     * Crea la colonna target binaria 'Won_Medal'.
     * Codifica il genere (Sex) in formato numerico.
+    * Codifica la nazione (NOC) in formato numerico.
     * Genera e salva i mapping per 'Sport' e 'NOC'.
 
     :param file_path: Percorso del file CSV del dataset.
@@ -47,7 +48,7 @@ def load_and_prepare_data(file_path):
 
 def standardize_features(X_train, X_test, scaler_path="modelli/scaler.pkl"):
     """
-    Applica la standardizzazione (Z-score normalization) alle feature del modello.
+    Applica la standardizzazione alle feature del modello.
     
     Il processo prevede:
 
@@ -79,7 +80,6 @@ def get_vincitori_for_nb(path_dataset):
 
     :param path_dataset: Percorso del file CSV originale.
     :return: DataFrame contenente solo i record dei vincitori (Gold, Silver, Bronze).
-    :rtype: pandas.DataFrame
     """
     if not os.path.exists(path_dataset):
         print(f"[!] Errore: Il file {path_dataset} non esiste.")
