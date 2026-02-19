@@ -101,12 +101,23 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="dataset.dataset_utils.get_vincitori_for_nb">
 <span class="sig-prename descclassname"><span class="pre">dataset.dataset_utils.</span></span><span class="sig-name descname"><span class="pre">get_vincitori_for_nb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_dataset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dataset/dataset_utils.html#get_vincitori_for_nb"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#dataset.dataset_utils.get_vincitori_for_nb" title="Link to this definition"></a></dt>
-<dd><p>Estrae dal dataset originale esclusivamente le righe relative ad atleti che hanno vinto una medaglia.</p>
-<p>Questa funzione è specifica per il training del modello Naive Bayes, che lavora
-sulla distribuzione probabilistica delle vittorie per nazione e sport.</p>
-<p>-param path_dataset: Percorso del file CSV originale.
--return: DataFrame contenente solo i record dei medagliati.
--rtype: pandas.DataFrame</p>
+<dd><p>Estrae dal dataset originale esclusivamente le righe relative ai medagliati.</p>
+<p>Questa funzione è fondamentale per il modello Naive Bayes perché:</p>
+<ul class="simple">
+<li><p>Permette di calcolare la probabilità condizionata per nazione.</p></li>
+<li><p>Riduce il rumore eliminando i record di chi non ha raggiunto il podio.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parametri<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path_dataset</strong> – Percorso del file CSV originale.</p>
+</dd>
+<dt class="field-even">Ritorna<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame contenente solo i record dei vincitori (Gold, Silver, Bronze).</p>
+</dd>
+<dt class="field-odd">Tipo di ritorno<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -134,12 +145,24 @@ sulla distribuzione probabilistica delle vittorie per nazione e sport.</p>
 <dt class="sig sig-object py" id="dataset.dataset_utils.standardize_features">
 <span class="sig-prename descclassname"><span class="pre">dataset.dataset_utils.</span></span><span class="sig-name descname"><span class="pre">standardize_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaler_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'modelli/scaler.pkl'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dataset/dataset_utils.html#standardize_features"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#dataset.dataset_utils.standardize_features" title="Link to this definition"></a></dt>
 <dd><p>Applica la standardizzazione (Z-score normalization) alle feature del modello.</p>
-<p>Lo scaler viene addestrato solo sul set di training per evitare data leakage
-e viene successivamente salvato su disco.</p>
-<p>-param X_train: Feature del set di addestramento.
--param X_test: Feature del set di test.
--param scaler_path: Percorso dove salvare l’oggetto StandardScaler serializzato.
--return: Una tupla contenente i DataFrame (X_train_scaled, X_test_scaled).</p>
+<p>Il processo prevede:</p>
+<ol class="arabic simple">
+<li><p>Calcolo di media e deviazione standard sul set di training.</p></li>
+<li><p>Trasformazione di entrambi i set (train e test).</p></li>
+<li><p>Salvataggio dello scaler per normalizzare i futuri input dell’utente.</p></li>
+</ol>
+<dl class="field-list simple">
+<dt class="field-odd">Parametri<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X_train</strong> – Feature del set di addestramento.</p></li>
+<li><p><strong>X_test</strong> – Feature del set di test.</p></li>
+<li><p><strong>scaler_path</strong> – Percorso dove salvare l’oggetto StandardScaler serializzato.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Ritorna<span class="colon">:</span></dt>
+<dd class="field-even"><p>Una tupla contenente i DataFrame (X_train_scaled, X_test_scaled).</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>

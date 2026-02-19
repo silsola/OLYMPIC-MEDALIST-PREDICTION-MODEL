@@ -21,16 +21,17 @@ def get_input_validato(messaggio, tipo, range_val=None, opzioni=None):
     Gestisce l'input dell'utente garantendo la correttezza formale e semantica dei dati.
     
     Supporta la validazione di:
-    - Sesso (M/F)
-    - Dati numerici in un range definito
-    - Codici nazione (NOC) presenti nel dataset
-    - Nomi degli sport (con correzione automatica tramite Fuzzy Matching)
 
-    -param messaggio: Testo da mostrare all'utente.
-    -param tipo: Tipo di dato atteso ('sex', 'numeric', 'noc', 'sport').
-    -param range_val: Tuple (min, max) per i valori numerici.
-    -param opzioni: Lista di valori validi (per NOC e Sport).
-    -return: Il valore validato e normalizzato.
+    * **Sesso**: (M/F)
+    * **Dati numerici**: in un range definito
+    * **Codici nazione (NOC)**: presenti nel dataset
+    * **Nomi degli sport**: con correzione automatica tramite Fuzzy Matching
+
+    :param messaggio: Testo da mostrare all'utente.
+    :param tipo: Tipo di dato atteso ('sex', 'numeric', 'noc', 'sport').
+    :param range_val: Tuple (min, max) per i valori numerici.
+    :param opzioni: Lista di valori validi (per NOC e Sport).
+    :return: Il valore validato e normalizzato.
     """
     while True:
         try:
@@ -62,13 +63,14 @@ def load_resources():
     """
     Carica i modelli serializzati e i file di supporto necessari alle previsioni.
     
-    Vengono caricati:
-    - Modello Random Forest e Scaler (Supervisionato).
-    - Mapping categorici per Sport e Nazioni.
-    - Modello Naive Bayes (Probabilistico).
+    Vengono caricati i seguenti componenti:
 
-    -return: Dizionario contenente tutti gli oggetti joblib caricati.
-    -raises SystemExit: Se uno dei file critici non viene trovato.
+    * **Modello Random Forest**: e Scaler (Supervisionato).
+    * **Mapping categorici**: per Sport e Nazioni.
+    * **Modello Naive Bayes**: (Probabilistico).
+
+    :return: Dizionario contenente tutti gli oggetti joblib caricati.
+    :raises SystemExit: Se uno dei file critici non viene trovato.
     """
     base_path = os.path.dirname(os.path.abspath(__file__))
     path_supervisionato = os.path.join(base_path, 'apprendimento_supervisionato', 'modelli')
@@ -91,13 +93,16 @@ def get_olympic_advice_detailed(prob_ml, noc, sport):
     """
     Interroga la Knowledge Base (KB) in Prolog per generare spiegazioni simboliche.
     
-    Combina la probabilità numerica derivata dal Machine Learning con le regole 
-    logiche definite in Prolog per fornire un consiglio testuale e una lista di motivazioni.
+    Combina la probabilità numerica del Machine Learning con le regole 
+    logiche definite in Prolog per fornire:
 
-    -param prob_ml: Probabilità di vittoria (0-1) calcolata dal Random Forest.
-    -param noc: Codice della nazione dell'atleta.
-    -param sport: Disciplina sportiva analizzata.
-    -return: Una tupla (Verdetto testuale, Lista di motivazioni logiche).
+    1. Un verdetto testuale basato sulla soglia di probabilità.
+    2. Una lista di motivazioni logiche legate alla nazione e allo sport.
+
+    :param prob_ml: Probabilità di vittoria (0-1) calcolata dal Random Forest.
+    :param noc: Codice della nazione dell'atleta.
+    :param sport: Disciplina sportiva analizzata.
+    :return: Una tupla (Verdetto testuale, Lista di motivazioni logiche).
     """
     prolog = Prolog()
     kb_path = "kb/rules.pl"
@@ -138,9 +143,9 @@ def find_sector_leader(resources, user_sport_str):
     Analizza la distribuzione di probabilità per lo sport indicato e restituisce 
     la nazione con la probabilità più alta di vittoria storica.
 
-    -param resources: Dizionario delle risorse caricate.
-    -param user_sport_str: Nome dello sport da analizzare.
-    -return: Una tupla (Nome Nazione Leader, Valore di Dominanza).
+    :param resources: Dizionario delle risorse caricate.
+    :param user_sport_str: Nome dello sport da analizzare.
+    :return: Una tupla (Nome Nazione Leader, Valore di Dominanza).
     """
     model = resources['nb_model']
     cols = resources['sport_cols_nb']

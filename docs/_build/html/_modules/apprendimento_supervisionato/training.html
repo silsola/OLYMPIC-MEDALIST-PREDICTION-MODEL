@@ -99,10 +99,13 @@
 <a class="viewcode-back" href="../../apprendimento_supervisionato.html#apprendimento_supervisionato.training.setup_directories">[documenti]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">setup_directories</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Inizializza la struttura delle cartelle necessaria per salvare i risultati.</span>
+<span class="sd">    Inizializza la struttura delle cartelle necessaria per i risultati.</span>
 <span class="sd">    </span>
-<span class="sd">    Crea le directory per i modelli salvati (.pkl), i grafici delle performance,</span>
-<span class="sd">    e i file JSON/CSV contenenti gli iperparametri e i risultati delle tabelle.</span>
+<span class="sd">    Vengono create le seguenti sottodirectory:</span>
+
+<span class="sd">    * **modelli/**: per i file .pkl dei classificatori e dello scaler.</span>
+<span class="sd">    * **grafici/**: per i plot di confronto e feature importance.</span>
+<span class="sd">    * **iperparametri/**: per i log delle ricerche GridSearch.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">local_folders</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;modelli&#39;</span><span class="p">,</span> <span class="s1">&#39;grafici&#39;</span><span class="p">,</span> <span class="s1">&#39;iperparametri/tabelle&#39;</span><span class="p">,</span> <span class="s1">&#39;iperparametri/migliori&#39;</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">folder</span> <span class="ow">in</span> <span class="n">local_folders</span><span class="p">:</span>
@@ -115,15 +118,16 @@
 <a class="viewcode-back" href="../../apprendimento_supervisionato.html#apprendimento_supervisionato.training.prepare_data">[documenti]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">prepare_data</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Esegue il caricamento del dataset e il preprocessing delle feature.</span>
+<span class="sd">    Esegue il caricamento e il preprocessing avanzato dei dati olimpici.</span>
 <span class="sd">    </span>
-<span class="sd">    Le operazioni includono:</span>
-<span class="sd">    - Creazione della variabile target binaria &#39;Won_Medal&#39;.</span>
-<span class="sd">    - Mapping delle variabili categoriche (Sex, Sport, NOC).</span>
-<span class="sd">    - Salvataggio dei mapping per l&#39;uso futuro in fase di predizione.</span>
-<span class="sd">    - Divisione del dataset in set di training e test (80/20) con stratificazione.</span>
+<span class="sd">    Il processo include:</span>
 
-<span class="sd">    -return: Una quadrupla contenente (X_train, X_test, y_train, y_test).</span>
+<span class="sd">    1. Definizione della variabile target &#39;Won_Medal&#39;.</span>
+<span class="sd">    2. Pulizia dei valori nulli e mapping del genere.</span>
+<span class="sd">    3. Conversione di Sport e Nazione in codici categorici numerici.</span>
+<span class="sd">    4. Suddivisione del dataset con tecnica di stratificazione.</span>
+
+<span class="sd">    :return: Una tupla contenente (X_train, X_test, y_train, y_test).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">path_dataset</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">project_root</span><span class="p">,</span> <span class="s2">&quot;dataset&quot;</span><span class="p">,</span> <span class="s2">&quot;olympics_dataset.csv&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_dataset</span><span class="p">):</span>
@@ -159,10 +163,10 @@
 <a class="viewcode-back" href="../../apprendimento_supervisionato.html#apprendimento_supervisionato.training.save_best_params">[documenti]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">save_best_params</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">best_params</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Esporta i migliori iperparametri individuati durante la fase di tuning.</span>
+<span class="sd">    Salva i migliori iperparametri individuati in formato JSON.</span>
 
-<span class="sd">    -param model_name: Stringa rappresentante il nome del modello (es. &#39;random_forest&#39;).</span>
-<span class="sd">    -param best_params: Dizionario contenente gli iperparametri ottimizzati.</span>
+<span class="sd">    :param model_name: Nome del modello (es. &#39;random_forest&#39;).</span>
+<span class="sd">    :param best_params: Dizionario dei parametri ottimali.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_file_path</span><span class="p">,</span> <span class="s1">&#39;iperparametri&#39;</span><span class="p">,</span> <span class="s1">&#39;migliori&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s1">_best_params.json&#39;</span><span class="p">)</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -175,12 +179,16 @@
 <a class="viewcode-back" href="../../apprendimento_supervisionato.html#apprendimento_supervisionato.training.save_performance_plot">[documenti]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">save_performance_plot</span><span class="p">(</span><span class="n">results_summary</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Genera un grafico a barre comparativo delle metriche di performance dei modelli.</span>
+<span class="sd">    Genera un grafico di confronto tra le metriche dei vari modelli.</span>
 <span class="sd">    </span>
-<span class="sd">    Il grafico confronta Accuratezza, Precision, Recall e F1-score ottenuti tramite </span>
-<span class="sd">    Cross-Validation, includendo le barre di errore per la deviazione standard.</span>
+<span class="sd">    Vengono confrontate le medie e le deviazioni standard di:</span>
 
-<span class="sd">    -param results_summary: Dizionario con le medie e deviazioni standard delle metriche.</span>
+<span class="sd">    * Accuracy</span>
+<span class="sd">    * Precision</span>
+<span class="sd">    * Recall</span>
+<span class="sd">    * F1-Score</span>
+
+<span class="sd">    :param results_summary: Dizionario contenente i risultati della Cross-Validation.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">,</span> <span class="s1">&#39;precision&#39;</span><span class="p">,</span> <span class="s1">&#39;recall&#39;</span><span class="p">,</span> <span class="s1">&#39;f1&#39;</span><span class="p">]</span>
     <span class="n">models</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">results_summary</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
@@ -208,13 +216,10 @@
 <a class="viewcode-back" href="../../apprendimento_supervisionato.html#apprendimento_supervisionato.training.save_feature_importance">[documenti]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">save_feature_importance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Crea un grafico dell&#39;importanza delle variabili (Feature Importance).</span>
-<span class="sd">    </span>
-<span class="sd">    Specifica per il modello Random Forest, visualizza quali feature (Sesso, NOC, Sport) </span>
-<span class="sd">    hanno influenzato maggiormente la capacità predittiva del modello.</span>
+<span class="sd">    Genera il grafico dell&#39;importanza delle variabili per il modello Random Forest.</span>
 
-<span class="sd">    -param model: Istanza del modello addestrato (RandomForestClassifier).</span>
-<span class="sd">    -param feature_names: Lista dei nomi delle colonne delle feature.</span>
+<span class="sd">    :param model: Modello Random Forest addestrato.</span>
+<span class="sd">    :param feature_names: Nomi delle colonne (Sex, NOC, Sport).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">importances</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">feature_importances_</span>
     <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">importances</span><span class="p">)</span>
@@ -232,14 +237,15 @@
 <a class="viewcode-back" href="../../apprendimento_supervisionato.html#apprendimento_supervisionato.training.main">[documenti]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Coordina l&#39;intero workflow di apprendimento supervisionato.</span>
+<span class="sd">    Punto di ingresso principale per l&#39;addestramento supervisionato.</span>
 <span class="sd">    </span>
-<span class="sd">    Il processo include:</span>
-<span class="sd">    1. Setup delle cartelle.</span>
-<span class="sd">    2. Preprocessing e scaling dei dati.</span>
-<span class="sd">    3. Addestramento e Cross-Validation della Regressione Logistica.</span>
-<span class="sd">    4. Tuning tramite Grid Search per il Random Forest.</span>
-<span class="sd">    5. Salvataggio di modelli, scaler, grafici e metriche finali.</span>
+<span class="sd">    Esegue sequenzialmente:</span>
+
+<span class="sd">    1. Setup delle directory e preparazione dati.</span>
+<span class="sd">    2. Scaling delle feature tramite StandardScaler.</span>
+<span class="sd">    3. Training e valutazione di Logistic Regression.</span>
+<span class="sd">    4. GridSearch per l&#39;ottimizzazione del Random Forest.</span>
+<span class="sd">    5. Generazione di report tabellari e grafici.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">setup_directories</span><span class="p">()</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[*] Preparazione dati in corso...&quot;</span><span class="p">)</span>

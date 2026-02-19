@@ -95,16 +95,17 @@
 <span class="sd">    Gestisce l&#39;input dell&#39;utente garantendo la correttezza formale e semantica dei dati.</span>
 <span class="sd">    </span>
 <span class="sd">    Supporta la validazione di:</span>
-<span class="sd">    - Sesso (M/F)</span>
-<span class="sd">    - Dati numerici in un range definito</span>
-<span class="sd">    - Codici nazione (NOC) presenti nel dataset</span>
-<span class="sd">    - Nomi degli sport (con correzione automatica tramite Fuzzy Matching)</span>
 
-<span class="sd">    -param messaggio: Testo da mostrare all&#39;utente.</span>
-<span class="sd">    -param tipo: Tipo di dato atteso (&#39;sex&#39;, &#39;numeric&#39;, &#39;noc&#39;, &#39;sport&#39;).</span>
-<span class="sd">    -param range_val: Tuple (min, max) per i valori numerici.</span>
-<span class="sd">    -param opzioni: Lista di valori validi (per NOC e Sport).</span>
-<span class="sd">    -return: Il valore validato e normalizzato.</span>
+<span class="sd">    * **Sesso**: (M/F)</span>
+<span class="sd">    * **Dati numerici**: in un range definito</span>
+<span class="sd">    * **Codici nazione (NOC)**: presenti nel dataset</span>
+<span class="sd">    * **Nomi degli sport**: con correzione automatica tramite Fuzzy Matching</span>
+
+<span class="sd">    :param messaggio: Testo da mostrare all&#39;utente.</span>
+<span class="sd">    :param tipo: Tipo di dato atteso (&#39;sex&#39;, &#39;numeric&#39;, &#39;noc&#39;, &#39;sport&#39;).</span>
+<span class="sd">    :param range_val: Tuple (min, max) per i valori numerici.</span>
+<span class="sd">    :param opzioni: Lista di valori validi (per NOC e Sport).</span>
+<span class="sd">    :return: Il valore validato e normalizzato.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
@@ -139,13 +140,14 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Carica i modelli serializzati e i file di supporto necessari alle previsioni.</span>
 <span class="sd">    </span>
-<span class="sd">    Vengono caricati:</span>
-<span class="sd">    - Modello Random Forest e Scaler (Supervisionato).</span>
-<span class="sd">    - Mapping categorici per Sport e Nazioni.</span>
-<span class="sd">    - Modello Naive Bayes (Probabilistico).</span>
+<span class="sd">    Vengono caricati i seguenti componenti:</span>
 
-<span class="sd">    -return: Dizionario contenente tutti gli oggetti joblib caricati.</span>
-<span class="sd">    -raises SystemExit: Se uno dei file critici non viene trovato.</span>
+<span class="sd">    * **Modello Random Forest**: e Scaler (Supervisionato).</span>
+<span class="sd">    * **Mapping categorici**: per Sport e Nazioni.</span>
+<span class="sd">    * **Modello Naive Bayes**: (Probabilistico).</span>
+
+<span class="sd">    :return: Dizionario contenente tutti gli oggetti joblib caricati.</span>
+<span class="sd">    :raises SystemExit: Se uno dei file critici non viene trovato.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">base_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
     <span class="n">path_supervisionato</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_path</span><span class="p">,</span> <span class="s1">&#39;apprendimento_supervisionato&#39;</span><span class="p">,</span> <span class="s1">&#39;modelli&#39;</span><span class="p">)</span>
@@ -171,13 +173,16 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Interroga la Knowledge Base (KB) in Prolog per generare spiegazioni simboliche.</span>
 <span class="sd">    </span>
-<span class="sd">    Combina la probabilità numerica derivata dal Machine Learning con le regole </span>
-<span class="sd">    logiche definite in Prolog per fornire un consiglio testuale e una lista di motivazioni.</span>
+<span class="sd">    Combina la probabilità numerica del Machine Learning con le regole </span>
+<span class="sd">    logiche definite in Prolog per fornire:</span>
 
-<span class="sd">    -param prob_ml: Probabilità di vittoria (0-1) calcolata dal Random Forest.</span>
-<span class="sd">    -param noc: Codice della nazione dell&#39;atleta.</span>
-<span class="sd">    -param sport: Disciplina sportiva analizzata.</span>
-<span class="sd">    -return: Una tupla (Verdetto testuale, Lista di motivazioni logiche).</span>
+<span class="sd">    1. Un verdetto testuale basato sulla soglia di probabilità.</span>
+<span class="sd">    2. Una lista di motivazioni logiche legate alla nazione e allo sport.</span>
+
+<span class="sd">    :param prob_ml: Probabilità di vittoria (0-1) calcolata dal Random Forest.</span>
+<span class="sd">    :param noc: Codice della nazione dell&#39;atleta.</span>
+<span class="sd">    :param sport: Disciplina sportiva analizzata.</span>
+<span class="sd">    :return: Una tupla (Verdetto testuale, Lista di motivazioni logiche).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">prolog</span> <span class="o">=</span> <span class="n">Prolog</span><span class="p">()</span>
     <span class="n">kb_path</span> <span class="o">=</span> <span class="s2">&quot;kb/rules.pl&quot;</span>
@@ -221,9 +226,9 @@
 <span class="sd">    Analizza la distribuzione di probabilità per lo sport indicato e restituisce </span>
 <span class="sd">    la nazione con la probabilità più alta di vittoria storica.</span>
 
-<span class="sd">    -param resources: Dizionario delle risorse caricate.</span>
-<span class="sd">    -param user_sport_str: Nome dello sport da analizzare.</span>
-<span class="sd">    -return: Una tupla (Nome Nazione Leader, Valore di Dominanza).</span>
+<span class="sd">    :param resources: Dizionario delle risorse caricate.</span>
+<span class="sd">    :param user_sport_str: Nome dello sport da analizzare.</span>
+<span class="sd">    :return: Una tupla (Nome Nazione Leader, Valore di Dominanza).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">resources</span><span class="p">[</span><span class="s1">&#39;nb_model&#39;</span><span class="p">]</span>
     <span class="n">cols</span> <span class="o">=</span> <span class="n">resources</span><span class="p">[</span><span class="s1">&#39;sport_cols_nb&#39;</span><span class="p">]</span>

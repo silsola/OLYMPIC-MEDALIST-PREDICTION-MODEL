@@ -126,13 +126,16 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Applica la standardizzazione (Z-score normalization) alle feature del modello.</span>
 <span class="sd">    </span>
-<span class="sd">    Lo scaler viene addestrato solo sul set di training per evitare data leakage</span>
-<span class="sd">    e viene successivamente salvato su disco.</span>
+<span class="sd">    Il processo prevede:</span>
 
-<span class="sd">    -param X_train: Feature del set di addestramento.</span>
-<span class="sd">    -param X_test: Feature del set di test.</span>
-<span class="sd">    -param scaler_path: Percorso dove salvare l&#39;oggetto StandardScaler serializzato.</span>
-<span class="sd">    -return: Una tupla contenente i DataFrame (X_train_scaled, X_test_scaled).</span>
+<span class="sd">    1. Calcolo di media e deviazione standard sul set di training.</span>
+<span class="sd">    2. Trasformazione di entrambi i set (train e test).</span>
+<span class="sd">    3. Salvataggio dello scaler per normalizzare i futuri input dell&#39;utente.</span>
+
+<span class="sd">    :param X_train: Feature del set di addestramento.</span>
+<span class="sd">    :param X_test: Feature del set di test.</span>
+<span class="sd">    :param scaler_path: Percorso dove salvare l&#39;oggetto StandardScaler serializzato.</span>
+<span class="sd">    :return: Una tupla contenente i DataFrame (X_train_scaled, X_test_scaled).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
     <span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
@@ -147,14 +150,16 @@
 <a class="viewcode-back" href="../../dataset.html#dataset.dataset_utils.get_vincitori_for_nb">[documenti]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_vincitori_for_nb</span><span class="p">(</span><span class="n">path_dataset</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Estrae dal dataset originale esclusivamente le righe relative ad atleti che hanno vinto una medaglia.</span>
+<span class="sd">    Estrae dal dataset originale esclusivamente le righe relative ai medagliati.</span>
 <span class="sd">    </span>
-<span class="sd">    Questa funzione è specifica per il training del modello Naive Bayes, che lavora </span>
-<span class="sd">    sulla distribuzione probabilistica delle vittorie per nazione e sport.</span>
+<span class="sd">    Questa funzione è fondamentale per il modello Naive Bayes perché:</span>
 
-<span class="sd">    -param path_dataset: Percorso del file CSV originale.</span>
-<span class="sd">    -return: DataFrame contenente solo i record dei medagliati.</span>
-<span class="sd">    -rtype: pandas.DataFrame</span>
+<span class="sd">    * Permette di calcolare la probabilità condizionata per nazione.</span>
+<span class="sd">    * Riduce il rumore eliminando i record di chi non ha raggiunto il podio.</span>
+
+<span class="sd">    :param path_dataset: Percorso del file CSV originale.</span>
+<span class="sd">    :return: DataFrame contenente solo i record dei vincitori (Gold, Silver, Bronze).</span>
+<span class="sd">    :rtype: pandas.DataFrame</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_dataset</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[!] Errore: Il file </span><span class="si">{</span><span class="n">path_dataset</span><span class="si">}</span><span class="s2"> non esiste.&quot;</span><span class="p">)</span>

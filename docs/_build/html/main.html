@@ -96,49 +96,87 @@
 <dd><p>Utilizza il modello Naive Bayes per identificare la nazione dominante in uno sport.</p>
 <p>Analizza la distribuzione di probabilità per lo sport indicato e restituisce
 la nazione con la probabilità più alta di vittoria storica.</p>
-<p>-param resources: Dizionario delle risorse caricate.
--param user_sport_str: Nome dello sport da analizzare.
--return: Una tupla (Nome Nazione Leader, Valore di Dominanza).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parametri<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>resources</strong> – Dizionario delle risorse caricate.</p></li>
+<li><p><strong>user_sport_str</strong> – Nome dello sport da analizzare.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Ritorna<span class="colon">:</span></dt>
+<dd class="field-even"><p>Una tupla (Nome Nazione Leader, Valore di Dominanza).</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="main.get_input_validato">
 <span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">get_input_validato</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">messaggio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tipo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opzioni</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#get_input_validato"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#main.get_input_validato" title="Link to this definition"></a></dt>
 <dd><p>Gestisce l’input dell’utente garantendo la correttezza formale e semantica dei dati.</p>
-<p>Supporta la validazione di:
-- Sesso (M/F)
-- Dati numerici in un range definito
-- Codici nazione (NOC) presenti nel dataset
-- Nomi degli sport (con correzione automatica tramite Fuzzy Matching)</p>
-<p>-param messaggio: Testo da mostrare all’utente.
--param tipo: Tipo di dato atteso (“sex”, “numeric”, “noc”, “sport”).
--param range_val: Tuple (min, max) per i valori numerici.
--param opzioni: Lista di valori validi (per NOC e Sport).
--return: Il valore validato e normalizzato.</p>
+<p>Supporta la validazione di:</p>
+<ul class="simple">
+<li><p><strong>Sesso</strong>: (M/F)</p></li>
+<li><p><strong>Dati numerici</strong>: in un range definito</p></li>
+<li><p><strong>Codici nazione (NOC)</strong>: presenti nel dataset</p></li>
+<li><p><strong>Nomi degli sport</strong>: con correzione automatica tramite Fuzzy Matching</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parametri<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>messaggio</strong> – Testo da mostrare all’utente.</p></li>
+<li><p><strong>tipo</strong> – Tipo di dato atteso (“sex”, “numeric”, “noc”, “sport”).</p></li>
+<li><p><strong>range_val</strong> – Tuple (min, max) per i valori numerici.</p></li>
+<li><p><strong>opzioni</strong> – Lista di valori validi (per NOC e Sport).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Ritorna<span class="colon">:</span></dt>
+<dd class="field-even"><p>Il valore validato e normalizzato.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="main.get_olympic_advice_detailed">
 <span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">get_olympic_advice_detailed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob_ml</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sport</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#get_olympic_advice_detailed"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#main.get_olympic_advice_detailed" title="Link to this definition"></a></dt>
 <dd><p>Interroga la Knowledge Base (KB) in Prolog per generare spiegazioni simboliche.</p>
-<p>Combina la probabilità numerica derivata dal Machine Learning con le regole
-logiche definite in Prolog per fornire un consiglio testuale e una lista di motivazioni.</p>
-<p>-param prob_ml: Probabilità di vittoria (0-1) calcolata dal Random Forest.
--param noc: Codice della nazione dell’atleta.
--param sport: Disciplina sportiva analizzata.
--return: Una tupla (Verdetto testuale, Lista di motivazioni logiche).</p>
+<p>Combina la probabilità numerica del Machine Learning con le regole
+logiche definite in Prolog per fornire:</p>
+<ol class="arabic simple">
+<li><p>Un verdetto testuale basato sulla soglia di probabilità.</p></li>
+<li><p>Una lista di motivazioni logiche legate alla nazione e allo sport.</p></li>
+</ol>
+<dl class="field-list simple">
+<dt class="field-odd">Parametri<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prob_ml</strong> – Probabilità di vittoria (0-1) calcolata dal Random Forest.</p></li>
+<li><p><strong>noc</strong> – Codice della nazione dell’atleta.</p></li>
+<li><p><strong>sport</strong> – Disciplina sportiva analizzata.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Ritorna<span class="colon">:</span></dt>
+<dd class="field-even"><p>Una tupla (Verdetto testuale, Lista di motivazioni logiche).</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="main.load_resources">
 <span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">load_resources</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#load_resources"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#main.load_resources" title="Link to this definition"></a></dt>
 <dd><p>Carica i modelli serializzati e i file di supporto necessari alle previsioni.</p>
-<p>Vengono caricati:
-- Modello Random Forest e Scaler (Supervisionato).
-- Mapping categorici per Sport e Nazioni.
-- Modello Naive Bayes (Probabilistico).</p>
-<p>-return: Dizionario contenente tutti gli oggetti joblib caricati.
--raises SystemExit: Se uno dei file critici non viene trovato.</p>
+<p>Vengono caricati i seguenti componenti:</p>
+<ul class="simple">
+<li><p><strong>Modello Random Forest</strong>: e Scaler (Supervisionato).</p></li>
+<li><p><strong>Mapping categorici</strong>: per Sport e Nazioni.</p></li>
+<li><p><strong>Modello Naive Bayes</strong>: (Probabilistico).</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Ritorna<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dizionario contenente tutti gli oggetti joblib caricati.</p>
+</dd>
+<dt class="field-even">Solleva<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>SystemExit</strong> – Se uno dei file critici non viene trovato.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">

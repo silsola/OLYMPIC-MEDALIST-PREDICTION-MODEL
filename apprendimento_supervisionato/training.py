@@ -25,10 +25,13 @@ sys.path.append(os.path.abspath(os.path.join(current_file_path, '..')))
 
 def setup_directories():
     """
-    Inizializza la struttura delle cartelle necessaria per salvare i risultati.
+    Inizializza la struttura delle cartelle necessaria per i risultati.
     
-    Crea le directory per i modelli salvati (.pkl), i grafici delle performance,
-    e i file JSON/CSV contenenti gli iperparametri e i risultati delle tabelle.
+    Vengono create le seguenti sottodirectory:
+
+    * **modelli/**: per i file .pkl dei classificatori e dello scaler.
+    * **grafici/**: per i plot di confronto e feature importance.
+    * **iperparametri/**: per i log delle ricerche GridSearch.
     """
     local_folders = ['modelli', 'grafici', 'iperparametri/tabelle', 'iperparametri/migliori']
     for folder in local_folders:
@@ -38,15 +41,16 @@ def setup_directories():
 
 def prepare_data():
     """
-    Esegue il caricamento del dataset e il preprocessing delle feature.
+    Esegue il caricamento e il preprocessing avanzato dei dati olimpici.
     
-    Le operazioni includono:
-    - Creazione della variabile target binaria 'Won_Medal'.
-    - Mapping delle variabili categoriche (Sex, Sport, NOC).
-    - Salvataggio dei mapping per l'uso futuro in fase di predizione.
-    - Divisione del dataset in set di training e test (80/20) con stratificazione.
+    Il processo include:
 
-    -return: Una quadrupla contenente (X_train, X_test, y_train, y_test).
+    1. Definizione della variabile target 'Won_Medal'.
+    2. Pulizia dei valori nulli e mapping del genere.
+    3. Conversione di Sport e Nazione in codici categorici numerici.
+    4. Suddivisione del dataset con tecnica di stratificazione.
+
+    :return: Una tupla contenente (X_train, X_test, y_train, y_test).
     """
     path_dataset = os.path.join(project_root, "dataset", "olympics_dataset.csv")
     if not os.path.exists(path_dataset):
@@ -79,10 +83,10 @@ def prepare_data():
 
 def save_best_params(model_name, best_params):
     """
-    Esporta i migliori iperparametri individuati durante la fase di tuning.
+    Salva i migliori iperparametri individuati in formato JSON.
 
-    -param model_name: Stringa rappresentante il nome del modello (es. 'random_forest').
-    -param best_params: Dizionario contenente gli iperparametri ottimizzati.
+    :param model_name: Nome del modello (es. 'random_forest').
+    :param best_params: Dizionario dei parametri ottimali.
     """
     path = os.path.join(current_file_path, 'iperparametri', 'migliori', f'{model_name}_best_params.json')
     with open(path, 'w') as f:
@@ -92,12 +96,16 @@ def save_best_params(model_name, best_params):
 
 def save_performance_plot(results_summary):
     """
-    Genera un grafico a barre comparativo delle metriche di performance dei modelli.
+    Genera un grafico di confronto tra le metriche dei vari modelli.
     
-    Il grafico confronta Accuratezza, Precision, Recall e F1-score ottenuti tramite 
-    Cross-Validation, includendo le barre di errore per la deviazione standard.
+    Vengono confrontate le medie e le deviazioni standard di:
 
-    -param results_summary: Dizionario con le medie e deviazioni standard delle metriche.
+    * Accuracy
+    * Precision
+    * Recall
+    * F1-Score
+
+    :param results_summary: Dizionario contenente i risultati della Cross-Validation.
     """
     metrics = ['accuracy', 'precision', 'recall', 'f1']
     models = list(results_summary.keys())
@@ -122,13 +130,10 @@ def save_performance_plot(results_summary):
 
 def save_feature_importance(model, feature_names):
     """
-    Crea un grafico dell'importanza delle variabili (Feature Importance).
-    
-    Specifica per il modello Random Forest, visualizza quali feature (Sesso, NOC, Sport) 
-    hanno influenzato maggiormente la capacità predittiva del modello.
+    Genera il grafico dell'importanza delle variabili per il modello Random Forest.
 
-    -param model: Istanza del modello addestrato (RandomForestClassifier).
-    -param feature_names: Lista dei nomi delle colonne delle feature.
+    :param model: Modello Random Forest addestrato.
+    :param feature_names: Nomi delle colonne (Sex, NOC, Sport).
     """
     importances = model.feature_importances_
     indices = np.argsort(importances)
@@ -143,14 +148,15 @@ def save_feature_importance(model, feature_names):
 
 def main():
     """
-    Coordina l'intero workflow di apprendimento supervisionato.
+    Punto di ingresso principale per l'addestramento supervisionato.
     
-    Il processo include:
-    1. Setup delle cartelle.
-    2. Preprocessing e scaling dei dati.
-    3. Addestramento e Cross-Validation della Regressione Logistica.
-    4. Tuning tramite Grid Search per il Random Forest.
-    5. Salvataggio di modelli, scaler, grafici e metriche finali.
+    Esegue sequenzialmente:
+
+    1. Setup delle directory e preparazione dati.
+    2. Scaling delle feature tramite StandardScaler.
+    3. Training e valutazione di Logistic Regression.
+    4. GridSearch per l'ottimizzazione del Random Forest.
+    5. Generazione di report tabellari e grafici.
     """
     setup_directories()
     print("[*] Preparazione dati in corso...")

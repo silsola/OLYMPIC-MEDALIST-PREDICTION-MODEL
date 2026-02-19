@@ -30,10 +30,11 @@ def setup_directories():
     """
     Crea la gerarchia di cartelle necessaria per organizzare i risultati del training.
     
-    Crea le sottocartelle:
-    - modelli/: per i file .pkl
-    - grafici/: per i plot PNG
-    - iperparametri/: per tabelle CSV e file JSON
+    Vengono create le seguenti directory:
+
+    * **modelli/**: per i file .pkl del classificatore.
+    * **grafici/**: per i plot PNG sulla dominanza.
+    * **iperparametri/**: per i file JSON di configurazione e tabelle CSV.
     """
     folders = ['modelli', 'grafici', 'iperparametri/tabelle', 'iperparametri/migliori']
     for folder in folders:
@@ -45,11 +46,15 @@ def prepare_data_nb(vincitori):
     """
     Trasforma il dataset in un formato adatto per il classificatore Multinomial Naive Bayes.
     
-    Esegue il filtraggio delle nazioni con poche occorrenze e applica la codifica 
-    One-Hot per le discipline sportive.
+    Il preprocessing include:
 
-    -param vincitori: DataFrame contenente i vincitori storici.
-    -return: Una tupla contenente (X_values, y_values, lista_colonne_sport).
+    1. Filtraggio delle nazioni con almeno 3 medaglie storiche.
+    2. Applicazione della codifica One-Hot Encoding per le discipline sportive.
+    3. Estrazione dei nomi delle colonne per le feature future.
+
+    :param vincitori: DataFrame contenente i vincitori storici medagliati.
+    :type vincitori: pandas.DataFrame
+    :return: Una tupla contenente (X_values, y_values, lista_colonne_sport).
     """
     counts = vincitori['NOC'].value_counts()
     nazioni_valide = counts[counts >= 3].index
@@ -67,12 +72,14 @@ def train_nb_optimized(X, y):
     """
     Esegue la ricerca degli iperparametri (Grid Search) per il modello Naive Bayes.
     
-    Ottimizza in particolare il parametro 'alpha' (Laplace Smoothing) per migliorare
-    la gestione delle probabilità per sport o nazioni meno frequenti.
+    Ottimizza i seguenti parametri:
 
-    -param X: Matrice delle feature (Sport codificati).
-    -param y: Vettore target (Nazioni NOC).
-    -return: Il miglior modello, i migliori parametri e i risultati della validazione incrociata.
+    * **alpha**: Il parametro di Laplace Smoothing (per gestire sport rari).
+    * **fit_prior**: Se imparare o meno le probabilità a priori delle classi.
+
+    :param X: Matrice delle feature (Sport codificati).
+    :param y: Vettore target (Nazioni NOC).
+    :return: Il miglior modello, i migliori parametri e i risultati della validazione.
     """
     model = MultinomialNB()
     param_grid = {
@@ -88,13 +95,15 @@ def generate_visualizations(model, sport_columns, grid_results):
     """
     Produce i grafici relativi all'accuratezza del modello e alle probabilità predittive.
     
-    Genera:
-    1. Un grafico a linee per l'ottimizzazione del parametro Alpha.
-    2. Grafici a barre per mostrare la dominanza delle nazioni in sport specifici (es. Nuoto e Scherma).
+    Genera i seguenti file:
 
-    -param model: Il modello Naive Bayes addestrato.
-    -param sport_columns: Elenco dei nomi degli sport utilizzati come feature.
-    -param grid_results: Risultati estratti dalla GridSearchCV.
+    * **ottimizzazione_nb.png**: Andamento dell'accuratezza al variare di Alpha.
+    * **dominanza_swimming.png**: Top 10 nazioni dominanti nel nuoto.
+    * **dominanza_fencing.png**: Top 10 nazioni dominanti nella scherma.
+
+    :param model: Il modello Naive Bayes addestrato.
+    :param sport_columns: Elenco dei nomi degli sport utilizzati come feature.
+    :param grid_results: Risultati estratti dalla GridSearchCV.
     """
     res_df = pd.DataFrame(grid_results)
     plt.figure(figsize=(8, 5))
@@ -142,10 +151,14 @@ def generate_visualizations(model, sport_columns, grid_results):
 
 def main():
     """
-    Punto di ingresso principale dello script.
+    Coordina l'intero workflow dell'apprendimento probabilistico.
     
-    Coordina il caricamento dei dati, l'addestramento, la visualizzazione e 
-    il salvataggio persistente dei risultati su disco.
+    Fasi del processo:
+
+    1. Inizializzazione delle cartelle di output.
+    2. Caricamento dei dati tramite utilità esterne.
+    3. Addestramento con ricerca della configurazione ottimale.
+    4. Esportazione del modello e delle visualizzazioni statistiche.
     """
     setup_directories()
     
