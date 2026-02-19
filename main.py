@@ -56,7 +56,7 @@ def load_resources():
 
 def get_olympic_advice_detailed(prob_ml, noc, sport):
     """
-    Interroga la KB Prolog per ottenere sia il verdetto che le spiegazioni (XAI).
+    Interroga la KB Prolog per ottenere sia il verdetto che le spiegazioni.
     """
     prolog = Prolog()
     kb_path = "kb/rules.pl"

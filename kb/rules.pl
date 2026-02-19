@@ -7,7 +7,7 @@
 
     Questo modulo implementa un sistema esperto ibrido. Integra le predizioni
     probabilistiche di un modello Random Forest con una base di conoscenza
-    simbolica per fornire analisi contestualizzate e spiegabili (XAI).
+    simbolica per fornire analisi contestualizzate e spiegabili.
 */
 
 % --- 1. FATTI ---
