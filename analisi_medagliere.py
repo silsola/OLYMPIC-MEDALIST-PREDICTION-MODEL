@@ -1,7 +1,27 @@
 import pandas as pd
 import os
 
+"""
+Modulo dedicato all'analisi statistica storica del medagliere olimpico.
+Questo script identifica le nazioni leader per ogni disciplina sportiva, calcola
+il loro grado di dominanza e genera un report CSV dettagliato che copre il periodo
+da Atene 1896 a Parigi 2024.
+"""
+
 def genera_report_leader():
+    """
+    Analizza il dataset storico per identificare la nazione leader.
+    
+    Procedura di analisi:
+
+    1. Carica il dataset dei Giochi Olimpici.
+    2. Filtra i record relativi ai vincitori.
+    3. Raggruppa le medaglie per Sport e Nazione.
+    4. Identifica la nazione con il maggior numero di medaglie.
+    5. Calcola la 'Percentuale di Dominanza'.
+
+    :return: None
+    """
     print("="*60)
     print("   ANALISI MEDAGLIERE: LEADER STORICI PER SPORT   ")
     print("="*60)

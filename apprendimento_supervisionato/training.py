@@ -10,6 +10,12 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier 
 from sklearn.preprocessing import StandardScaler
 
+"""
+Modulo per l'apprendimento supervisionato del modello di predizione medaglie.
+Questo script si occupa del caricamento dei dati, del preprocessing (scaling e encoding),
+dell'addestramento di modelli di classificazione (Logistic Regression e Random Forest)
+e della valutazione delle performance tramite Cross-Validation.
+"""
 
 current_file_path = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.abspath(os.path.join(current_file_path, '..'))
@@ -19,7 +25,10 @@ sys.path.append(os.path.abspath(os.path.join(current_file_path, '..')))
 
 def setup_directories():
     """
-    Crea la struttura delle cartelle per i risultati.
+    Inizializza la struttura delle cartelle necessaria per salvare i risultati.
+    
+    Crea le directory per i modelli salvati (.pkl), i grafici delle performance,
+    e i file JSON/CSV contenenti gli iperparametri e i risultati delle tabelle.
     """
     local_folders = ['modelli', 'grafici', 'iperparametri/tabelle', 'iperparametri/migliori']
     for folder in local_folders:
@@ -29,7 +38,15 @@ def setup_directories():
 
 def prepare_data():
     """
-    Caricamento e preprocessing dei dati olimpici
+    Esegue il caricamento del dataset e il preprocessing delle feature.
+    
+    Le operazioni includono:
+    - Creazione della variabile target binaria 'Won_Medal'.
+    - Mapping delle variabili categoriche (Sex, Sport, NOC).
+    - Salvataggio dei mapping per l'uso futuro in fase di predizione.
+    - Divisione del dataset in set di training e test (80/20) con stratificazione.
+
+    -return: Una quadrupla contenente (X_train, X_test, y_train, y_test).
     """
     path_dataset = os.path.join(project_root, "dataset", "olympics_dataset.csv")
     if not os.path.exists(path_dataset):
@@ -62,7 +79,10 @@ def prepare_data():
 
 def save_best_params(model_name, best_params):
     """
-    Salva i migliori iperparametri in formato JSON.
+    Esporta i migliori iperparametri individuati durante la fase di tuning.
+
+    -param model_name: Stringa rappresentante il nome del modello (es. 'random_forest').
+    -param best_params: Dizionario contenente gli iperparametri ottimizzati.
     """
     path = os.path.join(current_file_path, 'iperparametri', 'migliori', f'{model_name}_best_params.json')
     with open(path, 'w') as f:
@@ -72,7 +92,12 @@ def save_best_params(model_name, best_params):
 
 def save_performance_plot(results_summary):
     """
-    Genera grafico di confronto.
+    Genera un grafico a barre comparativo delle metriche di performance dei modelli.
+    
+    Il grafico confronta Accuratezza, Precision, Recall e F1-score ottenuti tramite 
+    Cross-Validation, includendo le barre di errore per la deviazione standard.
+
+    -param results_summary: Dizionario con le medie e deviazioni standard delle metriche.
     """
     metrics = ['accuracy', 'precision', 'recall', 'f1']
     models = list(results_summary.keys())
@@ -97,7 +122,13 @@ def save_performance_plot(results_summary):
 
 def save_feature_importance(model, feature_names):
     """
-    Grafico dell'importanza delle variabili per Random Forest.
+    Crea un grafico dell'importanza delle variabili (Feature Importance).
+    
+    Specifica per il modello Random Forest, visualizza quali feature (Sesso, NOC, Sport) 
+    hanno influenzato maggiormente la capacità predittiva del modello.
+
+    -param model: Istanza del modello addestrato (RandomForestClassifier).
+    -param feature_names: Lista dei nomi delle colonne delle feature.
     """
     importances = model.feature_importances_
     indices = np.argsort(importances)
@@ -111,6 +142,16 @@ def save_feature_importance(model, feature_names):
 
 
 def main():
+    """
+    Coordina l'intero workflow di apprendimento supervisionato.
+    
+    Il processo include:
+    1. Setup delle cartelle.
+    2. Preprocessing e scaling dei dati.
+    3. Addestramento e Cross-Validation della Regressione Logistica.
+    4. Tuning tramite Grid Search per il Random Forest.
+    5. Salvataggio di modelli, scaler, grafici e metriche finali.
+    """
     setup_directories()
     print("[*] Preparazione dati in corso...")
     X_train, X_test, y_train, y_test = prepare_data()

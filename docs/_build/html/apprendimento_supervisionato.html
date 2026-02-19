@@ -1,0 +1,200 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="it" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>apprendimento_supervisionato package &mdash; Documentazione Analisi Medagliere Olimpiadi 1.0 </title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=945aedf1"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=da26b4cc"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Indice" href="genindex.html" />
+    <link rel="search" title="Cerca" href="search.html" />
+    <link rel="next" title="apprendimento_probabilistico package" href="apprendimento_probabilistico.html" />
+    <link rel="prev" title="kb package" href="kb.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Analisi Medagliere Olimpiadi
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Cerca documenti" aria-label="Cerca documenti" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu di navigazione">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Olympic Medalist Prediction Model</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="main.html">main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analisi_medagliere.html">analisi_medagliere module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataset.html">dataset package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kb.html">kb package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">apprendimento_supervisionato package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-apprendimento_supervisionato.training">apprendimento_supervisionato.training module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_supervisionato.training.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_supervisionato.training.prepare_data"><code class="docutils literal notranslate"><span class="pre">prepare_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_supervisionato.training.save_best_params"><code class="docutils literal notranslate"><span class="pre">save_best_params()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_supervisionato.training.save_feature_importance"><code class="docutils literal notranslate"><span class="pre">save_feature_importance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_supervisionato.training.save_performance_plot"><code class="docutils literal notranslate"><span class="pre">save_performance_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_supervisionato.training.setup_directories"><code class="docutils literal notranslate"><span class="pre">setup_directories()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-apprendimento_supervisionato">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="apprendimento_probabilistico.html">apprendimento_probabilistico package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Menu navigazione dispositivi mobili" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Analisi Medagliere Olimpiadi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Naviga tra le pagine">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Olympic Medalist Prediction Model</a></li>
+      <li class="breadcrumb-item active">apprendimento_supervisionato package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/apprendimento_supervisionato.rst.txt" rel="nofollow"> Visualizza sorgente pagina</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="apprendimento-supervisionato-package">
+<h1>apprendimento_supervisionato package<a class="headerlink" href="#apprendimento-supervisionato-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-apprendimento_supervisionato.training">
+<span id="apprendimento-supervisionato-training-module"></span><h2>apprendimento_supervisionato.training module<a class="headerlink" href="#module-apprendimento_supervisionato.training" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_supervisionato.training.main">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_supervisionato.training.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_supervisionato/training.html#main"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_supervisionato.training.main" title="Link to this definition"></a></dt>
+<dd><p>Coordina l’intero workflow di apprendimento supervisionato.</p>
+<p>Il processo include:
+1. Setup delle cartelle.
+2. Preprocessing e scaling dei dati.
+3. Addestramento e Cross-Validation della Regressione Logistica.
+4. Tuning tramite Grid Search per il Random Forest.
+5. Salvataggio di modelli, scaler, grafici e metriche finali.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_supervisionato.training.prepare_data">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_supervisionato.training.</span></span><span class="sig-name descname"><span class="pre">prepare_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_supervisionato/training.html#prepare_data"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_supervisionato.training.prepare_data" title="Link to this definition"></a></dt>
+<dd><p>Esegue il caricamento del dataset e il preprocessing delle feature.</p>
+<p>Le operazioni includono:
+- Creazione della variabile target binaria “Won_Medal”.
+- Mapping delle variabili categoriche (Sex, Sport, NOC).
+- Salvataggio dei mapping per l’uso futuro in fase di predizione.
+- Divisione del dataset in set di training e test (80/20) con stratificazione.</p>
+<p>-return: Una quadrupla contenente (X_train, X_test, y_train, y_test).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_supervisionato.training.save_best_params">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_supervisionato.training.</span></span><span class="sig-name descname"><span class="pre">save_best_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">best_params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_supervisionato/training.html#save_best_params"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_supervisionato.training.save_best_params" title="Link to this definition"></a></dt>
+<dd><p>Esporta i migliori iperparametri individuati durante la fase di tuning.</p>
+<p>-param model_name: Stringa rappresentante il nome del modello (es. “random_forest”).
+-param best_params: Dizionario contenente gli iperparametri ottimizzati.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_supervisionato.training.save_feature_importance">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_supervisionato.training.</span></span><span class="sig-name descname"><span class="pre">save_feature_importance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_names</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_supervisionato/training.html#save_feature_importance"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_supervisionato.training.save_feature_importance" title="Link to this definition"></a></dt>
+<dd><p>Crea un grafico dell’importanza delle variabili (Feature Importance).</p>
+<p>Specifica per il modello Random Forest, visualizza quali feature (Sesso, NOC, Sport)
+hanno influenzato maggiormente la capacità predittiva del modello.</p>
+<p>-param model: Istanza del modello addestrato (RandomForestClassifier).
+-param feature_names: Lista dei nomi delle colonne delle feature.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_supervisionato.training.save_performance_plot">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_supervisionato.training.</span></span><span class="sig-name descname"><span class="pre">save_performance_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results_summary</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_supervisionato/training.html#save_performance_plot"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_supervisionato.training.save_performance_plot" title="Link to this definition"></a></dt>
+<dd><p>Genera un grafico a barre comparativo delle metriche di performance dei modelli.</p>
+<p>Il grafico confronta Accuratezza, Precision, Recall e F1-score ottenuti tramite
+Cross-Validation, includendo le barre di errore per la deviazione standard.</p>
+<p>-param results_summary: Dizionario con le medie e deviazioni standard delle metriche.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_supervisionato.training.setup_directories">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_supervisionato.training.</span></span><span class="sig-name descname"><span class="pre">setup_directories</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_supervisionato/training.html#setup_directories"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_supervisionato.training.setup_directories" title="Link to this definition"></a></dt>
+<dd><p>Inizializza la struttura delle cartelle necessaria per salvare i risultati.</p>
+<p>Crea le directory per i modelli salvati (.pkl), i grafici delle performance,
+e i file JSON/CSV contenenti gli iperparametri e i risultati delle tabelle.</p>
+</dd></dl>
+
+</section>
+<section id="module-apprendimento_supervisionato">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-apprendimento_supervisionato" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Piè di pagina">
+        <a href="kb.html" class="btn btn-neutral float-left" title="kb package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Precedente</a>
+        <a href="apprendimento_probabilistico.html" class="btn btn-neutral float-right" title="apprendimento_probabilistico package" accesskey="n" rel="next">Prossimo <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Silvia Solazzo.</p>
+  </div>
+
+  Realizzato con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    fornito da <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

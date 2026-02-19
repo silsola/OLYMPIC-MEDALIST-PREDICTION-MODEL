@@ -1,0 +1,189 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="it" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>main module &mdash; Documentazione Analisi Medagliere Olimpiadi 1.0 </title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=945aedf1"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=da26b4cc"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Indice" href="genindex.html" />
+    <link rel="search" title="Cerca" href="search.html" />
+    <link rel="next" title="analisi_medagliere module" href="analisi_medagliere.html" />
+    <link rel="prev" title="Olympic Medalist Prediction Model" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Analisi Medagliere Olimpiadi
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Cerca documenti" aria-label="Cerca documenti" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu di navigazione">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Olympic Medalist Prediction Model</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">main module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.find_sector_leader"><code class="docutils literal notranslate"><span class="pre">find_sector_leader()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#main.get_input_validato"><code class="docutils literal notranslate"><span class="pre">get_input_validato()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#main.get_olympic_advice_detailed"><code class="docutils literal notranslate"><span class="pre">get_olympic_advice_detailed()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#main.load_resources"><code class="docutils literal notranslate"><span class="pre">load_resources()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="analisi_medagliere.html">analisi_medagliere module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataset.html">dataset package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kb.html">kb package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apprendimento_supervisionato.html">apprendimento_supervisionato package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apprendimento_probabilistico.html">apprendimento_probabilistico package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Menu navigazione dispositivi mobili" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Analisi Medagliere Olimpiadi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Naviga tra le pagine">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Olympic Medalist Prediction Model</a></li>
+      <li class="breadcrumb-item active">main module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/main.rst.txt" rel="nofollow"> Visualizza sorgente pagina</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-main">
+<span id="main-module"></span><h1>main module<a class="headerlink" href="#module-main" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="main.find_sector_leader">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">find_sector_leader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resources</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_sport_str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#find_sector_leader"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#main.find_sector_leader" title="Link to this definition"></a></dt>
+<dd><p>Utilizza il modello Naive Bayes per identificare la nazione dominante in uno sport.</p>
+<p>Analizza la distribuzione di probabilità per lo sport indicato e restituisce
+la nazione con la probabilità più alta di vittoria storica.</p>
+<p>-param resources: Dizionario delle risorse caricate.
+-param user_sport_str: Nome dello sport da analizzare.
+-return: Una tupla (Nome Nazione Leader, Valore di Dominanza).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.get_input_validato">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">get_input_validato</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">messaggio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tipo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opzioni</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#get_input_validato"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#main.get_input_validato" title="Link to this definition"></a></dt>
+<dd><p>Gestisce l’input dell’utente garantendo la correttezza formale e semantica dei dati.</p>
+<p>Supporta la validazione di:
+- Sesso (M/F)
+- Dati numerici in un range definito
+- Codici nazione (NOC) presenti nel dataset
+- Nomi degli sport (con correzione automatica tramite Fuzzy Matching)</p>
+<p>-param messaggio: Testo da mostrare all’utente.
+-param tipo: Tipo di dato atteso (“sex”, “numeric”, “noc”, “sport”).
+-param range_val: Tuple (min, max) per i valori numerici.
+-param opzioni: Lista di valori validi (per NOC e Sport).
+-return: Il valore validato e normalizzato.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.get_olympic_advice_detailed">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">get_olympic_advice_detailed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob_ml</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sport</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#get_olympic_advice_detailed"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#main.get_olympic_advice_detailed" title="Link to this definition"></a></dt>
+<dd><p>Interroga la Knowledge Base (KB) in Prolog per generare spiegazioni simboliche.</p>
+<p>Combina la probabilità numerica derivata dal Machine Learning con le regole
+logiche definite in Prolog per fornire un consiglio testuale e una lista di motivazioni.</p>
+<p>-param prob_ml: Probabilità di vittoria (0-1) calcolata dal Random Forest.
+-param noc: Codice della nazione dell’atleta.
+-param sport: Disciplina sportiva analizzata.
+-return: Una tupla (Verdetto testuale, Lista di motivazioni logiche).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.load_resources">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">load_resources</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#load_resources"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#main.load_resources" title="Link to this definition"></a></dt>
+<dd><p>Carica i modelli serializzati e i file di supporto necessari alle previsioni.</p>
+<p>Vengono caricati:
+- Modello Random Forest e Scaler (Supervisionato).
+- Mapping categorici per Sport e Nazioni.
+- Modello Naive Bayes (Probabilistico).</p>
+<p>-return: Dizionario contenente tutti gli oggetti joblib caricati.
+-raises SystemExit: Se uno dei file critici non viene trovato.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.main">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#main"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#main.main" title="Link to this definition"></a></dt>
+<dd><p>Workflow principale del sistema:
+1. Caricamento modelli.
+2. Input utente validato.
+3. Predizione numerica tramite Random Forest.
+4. Analisi probabilistica del leader di settore.
+5. Generazione di spiegazioni logiche tramite Prolog.
+6. Output formattato dei risultati.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Piè di pagina">
+        <a href="modules.html" class="btn btn-neutral float-left" title="Olympic Medalist Prediction Model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Precedente</a>
+        <a href="analisi_medagliere.html" class="btn btn-neutral float-right" title="analisi_medagliere module" accesskey="n" rel="next">Prossimo <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Silvia Solazzo.</p>
+  </div>
+
+  Realizzato con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    fornito da <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

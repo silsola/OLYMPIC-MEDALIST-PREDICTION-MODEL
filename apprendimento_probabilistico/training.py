@@ -8,6 +8,12 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import GridSearchCV
 from sklearn.naive_bayes import MultinomialNB
 
+"""
+Modulo per l'addestramento del modello di apprendimento probabilistico (Naive Bayes).
+Questo script gestisce l'ottimizzazione degli iperparametri, la generazione di grafici
+di dominanza statistica e il salvataggio dei modelli per le predizioni future.
+"""
+
 current_dir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(current_dir)
 sys.path.append(os.path.abspath(os.path.join(current_dir, '..')))
@@ -22,7 +28,12 @@ except ImportError:
 
 def setup_directories():
     """
-    Crea le sottocartelle per organizzare i risultati.
+    Crea la gerarchia di cartelle necessaria per organizzare i risultati del training.
+    
+    Crea le sottocartelle:
+    - modelli/: per i file .pkl
+    - grafici/: per i plot PNG
+    - iperparametri/: per tabelle CSV e file JSON
     """
     folders = ['modelli', 'grafici', 'iperparametri/tabelle', 'iperparametri/migliori']
     for folder in folders:
@@ -32,7 +43,13 @@ def setup_directories():
 
 def prepare_data_nb(vincitori):
     """
-    Prepara i dati per il modello Bayesiano.
+    Trasforma il dataset in un formato adatto per il classificatore Multinomial Naive Bayes.
+    
+    Esegue il filtraggio delle nazioni con poche occorrenze e applica la codifica 
+    One-Hot per le discipline sportive.
+
+    -param vincitori: DataFrame contenente i vincitori storici.
+    -return: Una tupla contenente (X_values, y_values, lista_colonne_sport).
     """
     counts = vincitori['NOC'].value_counts()
     nazioni_valide = counts[counts >= 3].index
@@ -48,7 +65,14 @@ def prepare_data_nb(vincitori):
 
 def train_nb_optimized(X, y):
     """
-    Esegue GridSearch per ottimizzare lo Smoothing di Laplace.
+    Esegue la ricerca degli iperparametri (Grid Search) per il modello Naive Bayes.
+    
+    Ottimizza in particolare il parametro 'alpha' (Laplace Smoothing) per migliorare
+    la gestione delle probabilità per sport o nazioni meno frequenti.
+
+    -param X: Matrice delle feature (Sport codificati).
+    -param y: Vettore target (Nazioni NOC).
+    -return: Il miglior modello, i migliori parametri e i risultati della validazione incrociata.
     """
     model = MultinomialNB()
     param_grid = {
@@ -62,7 +86,15 @@ def train_nb_optimized(X, y):
 
 def generate_visualizations(model, sport_columns, grid_results):
     """
-    Genera grafici per l'analisi della dominanza statistica.
+    Produce i grafici relativi all'accuratezza del modello e alle probabilità predittive.
+    
+    Genera:
+    1. Un grafico a linee per l'ottimizzazione del parametro Alpha.
+    2. Grafici a barre per mostrare la dominanza delle nazioni in sport specifici (es. Nuoto e Scherma).
+
+    -param model: Il modello Naive Bayes addestrato.
+    -param sport_columns: Elenco dei nomi degli sport utilizzati come feature.
+    -param grid_results: Risultati estratti dalla GridSearchCV.
     """
     res_df = pd.DataFrame(grid_results)
     plt.figure(figsize=(8, 5))
@@ -109,6 +141,12 @@ def generate_visualizations(model, sport_columns, grid_results):
 
 
 def main():
+    """
+    Punto di ingresso principale dello script.
+    
+    Coordina il caricamento dei dati, l'addestramento, la visualizzazione e 
+    il salvataggio persistente dei risultati su disco.
+    """
     setup_directories()
     
     print("\n" + "═"*60)

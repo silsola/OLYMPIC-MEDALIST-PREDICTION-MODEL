@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Analisi Medagliere Olimpiadi documentation &mdash; Documentazione Analisi Medagliere Olimpiadi 1.0 </title>
+  <title>Welcome to Olympic Medalist Prediction Model’s documentation! &mdash; Documentazione Analisi Medagliere Olimpiadi 1.0 </title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
@@ -19,7 +19,8 @@
       <script src="_static/translations.js?v=da26b4cc"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Indice" href="genindex.html" />
-    <link rel="search" title="Cerca" href="search.html" /> 
+    <link rel="search" title="Cerca" href="search.html" />
+    <link rel="next" title="Olympic Medalist Prediction Model" href="modules.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -41,26 +42,11 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu di navigazione">
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">Analisi Medagliere Olimpiadi documentation</a></li>
-<li><a class="reference internal" href="#moduli-del-progetto">Moduli del Progetto</a><ul>
-<li><a class="reference internal" href="#module-main">Modulo Main</a><ul>
-<li><a class="reference internal" href="#main.find_sector_leader"><code class="docutils literal notranslate"><span class="pre">find_sector_leader()</span></code></a></li>
-<li><a class="reference internal" href="#main.get_input_validato"><code class="docutils literal notranslate"><span class="pre">get_input_validato()</span></code></a></li>
-<li><a class="reference internal" href="#main.get_olympic_advice_detailed"><code class="docutils literal notranslate"><span class="pre">get_olympic_advice_detailed()</span></code></a></li>
-<li><a class="reference internal" href="#main.load_resources"><code class="docutils literal notranslate"><span class="pre">load_resources()</span></code></a></li>
-<li><a class="reference internal" href="#main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Olympic Medalist Prediction Model</a></li>
 </ul>
-</li>
-<li><a class="reference internal" href="#module-analisi_medagliere">Modulo Analisi Medagliere</a><ul>
-<li><a class="reference internal" href="#analisi_medagliere.genera_report_leader"><code class="docutils literal notranslate"><span class="pre">genera_report_leader()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</div>
+
         </div>
       </div>
     </nav>
@@ -75,7 +61,7 @@
           <div role="navigation" aria-label="Naviga tra le pagine">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Analisi Medagliere Olimpiadi documentation</li>
+      <li class="breadcrumb-item active">Welcome to Olympic Medalist Prediction Model’s documentation!</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> Visualizza sorgente pagina</a>
       </li>
@@ -85,56 +71,30 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="analisi-medagliere-olimpiadi-documentation">
-<h1>Analisi Medagliere Olimpiadi documentation<a class="headerlink" href="#analisi-medagliere-olimpiadi-documentation" title="Link to this heading"></a></h1>
+  <section id="welcome-to-olympic-medalist-prediction-model-s-documentation">
+<h1>Welcome to Olympic Medalist Prediction Model’s documentation!<a class="headerlink" href="#welcome-to-olympic-medalist-prediction-model-s-documentation" title="Link to this heading"></a></h1>
 <div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Olympic Medalist Prediction Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="main.html">main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analisi_medagliere.html">analisi_medagliere module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataset.html">dataset package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kb.html">kb package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apprendimento_supervisionato.html">apprendimento_supervisionato package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apprendimento_probabilistico.html">apprendimento_probabilistico package</a></li>
+</ul>
+</li>
+</ul>
 </div>
-</section>
-<section id="moduli-del-progetto">
-<h1>Moduli del Progetto<a class="headerlink" href="#moduli-del-progetto" title="Link to this heading"></a></h1>
-<section id="module-main">
-<span id="modulo-main"></span><h2>Modulo Main<a class="headerlink" href="#module-main" title="Link to this heading"></a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="main.find_sector_leader">
-<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">find_sector_leader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resources</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_sport_str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#find_sector_leader"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#main.find_sector_leader" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="main.get_input_validato">
-<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">get_input_validato</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">messaggio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tipo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opzioni</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#get_input_validato"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#main.get_input_validato" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="main.get_olympic_advice_detailed">
-<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">get_olympic_advice_detailed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob_ml</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sport</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#get_olympic_advice_detailed"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#main.get_olympic_advice_detailed" title="Link to this definition"></a></dt>
-<dd><p>Interroga la KB Prolog per ottenere sia il verdetto che le spiegazioni.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="main.load_resources">
-<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">load_resources</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#load_resources"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#main.load_resources" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="main.main">
-<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#main"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#main.main" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-analisi_medagliere">
-<span id="modulo-analisi-medagliere"></span><h2>Modulo Analisi Medagliere<a class="headerlink" href="#module-analisi_medagliere" title="Link to this heading"></a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="analisi_medagliere.genera_report_leader">
-<span class="sig-prename descclassname"><span class="pre">analisi_medagliere.</span></span><span class="sig-name descname"><span class="pre">genera_report_leader</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analisi_medagliere.html#genera_report_leader"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#analisi_medagliere.genera_report_leader" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-</section>
 </section>
 
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Piè di pagina">
+        <a href="modules.html" class="btn btn-neutral float-right" title="Olympic Medalist Prediction Model" accesskey="n" rel="next">Prossimo <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 

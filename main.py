@@ -7,9 +7,31 @@ import warnings
 from pyswip import Prolog
 from thefuzz import process 
 
+"""
+Modulo principale del Sistema di Predizione Olimpica.
+Questo script funge da orchestratore tra i modelli di apprendimento supervisionato,
+probabilistico e la Base di Conoscenza (KB) in Prolog. Gestisce l'interazione
+con l'utente tramite interfaccia testuale e fornisce analisi predittive complete.
+"""
+
 warnings.filterwarnings("ignore", category=UserWarning)
 
 def get_input_validato(messaggio, tipo, range_val=None, opzioni=None):
+    """
+    Gestisce l'input dell'utente garantendo la correttezza formale e semantica dei dati.
+    
+    Supporta la validazione di:
+    - Sesso (M/F)
+    - Dati numerici in un range definito
+    - Codici nazione (NOC) presenti nel dataset
+    - Nomi degli sport (con correzione automatica tramite Fuzzy Matching)
+
+    -param messaggio: Testo da mostrare all'utente.
+    -param tipo: Tipo di dato atteso ('sex', 'numeric', 'noc', 'sport').
+    -param range_val: Tuple (min, max) per i valori numerici.
+    -param opzioni: Lista di valori validi (per NOC e Sport).
+    -return: Il valore validato e normalizzato.
+    """
     while True:
         try:
             valore = input(messaggio).strip()
@@ -37,6 +59,17 @@ def get_input_validato(messaggio, tipo, range_val=None, opzioni=None):
 
 
 def load_resources():
+    """
+    Carica i modelli serializzati e i file di supporto necessari alle previsioni.
+    
+    Vengono caricati:
+    - Modello Random Forest e Scaler (Supervisionato).
+    - Mapping categorici per Sport e Nazioni.
+    - Modello Naive Bayes (Probabilistico).
+
+    -return: Dizionario contenente tutti gli oggetti joblib caricati.
+    -raises SystemExit: Se uno dei file critici non viene trovato.
+    """
     base_path = os.path.dirname(os.path.abspath(__file__))
     path_supervisionato = os.path.join(base_path, 'apprendimento_supervisionato', 'modelli')
     path_probabilistico = os.path.join(base_path, 'apprendimento_probabilistico', 'modelli')
@@ -56,7 +89,15 @@ def load_resources():
 
 def get_olympic_advice_detailed(prob_ml, noc, sport):
     """
-    Interroga la KB Prolog per ottenere sia il verdetto che le spiegazioni.
+    Interroga la Knowledge Base (KB) in Prolog per generare spiegazioni simboliche.
+    
+    Combina la probabilità numerica derivata dal Machine Learning con le regole 
+    logiche definite in Prolog per fornire un consiglio testuale e una lista di motivazioni.
+
+    -param prob_ml: Probabilità di vittoria (0-1) calcolata dal Random Forest.
+    -param noc: Codice della nazione dell'atleta.
+    -param sport: Disciplina sportiva analizzata.
+    -return: Una tupla (Verdetto testuale, Lista di motivazioni logiche).
     """
     prolog = Prolog()
     kb_path = "kb/rules.pl"
@@ -91,6 +132,16 @@ def get_olympic_advice_detailed(prob_ml, noc, sport):
 
 
 def find_sector_leader(resources, user_sport_str):
+    """
+    Utilizza il modello Naive Bayes per identificare la nazione dominante in uno sport.
+    
+    Analizza la distribuzione di probabilità per lo sport indicato e restituisce 
+    la nazione con la probabilità più alta di vittoria storica.
+
+    -param resources: Dizionario delle risorse caricate.
+    -param user_sport_str: Nome dello sport da analizzare.
+    -return: Una tupla (Nome Nazione Leader, Valore di Dominanza).
+    """
     model = resources['nb_model']
     cols = resources['sport_cols_nb']
     if user_sport_str not in cols: return "N/D", 0.0
@@ -102,6 +153,15 @@ def find_sector_leader(resources, user_sport_str):
 
 
 def main():
+    """
+    Workflow principale del sistema:
+    1. Caricamento modelli.
+    2. Input utente validato.
+    3. Predizione numerica tramite Random Forest.
+    4. Analisi probabilistica del leader di settore.
+    5. Generazione di spiegazioni logiche tramite Prolog.
+    6. Output formattato dei risultati.
+    """
     res = load_resources()
     print("\n" + "═"*60)
     print("            SISTEMA DI PREDIZIONE OLIMPICA       ")
