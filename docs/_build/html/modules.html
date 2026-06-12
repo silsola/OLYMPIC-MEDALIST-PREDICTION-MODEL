@@ -85,11 +85,15 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="main.html">main module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="main.html#main.build_athlete_dataframe"><code class="docutils literal notranslate"><span class="pre">build_athlete_dataframe()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="main.html#main.find_sector_leader"><code class="docutils literal notranslate"><span class="pre">find_sector_leader()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="main.html#main.get_historical_context"><code class="docutils literal notranslate"><span class="pre">get_historical_context()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="main.html#main.get_input_validato"><code class="docutils literal notranslate"><span class="pre">get_input_validato()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="main.html#main.get_olympic_advice_detailed"><code class="docutils literal notranslate"><span class="pre">get_olympic_advice_detailed()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="main.html#main.load_resources"><code class="docutils literal notranslate"><span class="pre">load_resources()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="main.html#main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="main.html#main.predict_medal_probability"><code class="docutils literal notranslate"><span class="pre">predict_medal_probability()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="main.html#main.print_results"><code class="docutils literal notranslate"><span class="pre">print_results()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="analisi_medagliere.html">analisi_medagliere module</a><ul>
@@ -99,8 +103,10 @@
 <li class="toctree-l1"><a class="reference internal" href="dataset.html">dataset package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="dataset.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataset.html#module-dataset.dataset_utils">dataset.dataset_utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dataset.html#dataset.dataset_utils.add_historical_features"><code class="docutils literal notranslate"><span class="pre">add_historical_features()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="dataset.html#dataset.dataset_utils.get_vincitori_for_nb"><code class="docutils literal notranslate"><span class="pre">get_vincitori_for_nb()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="dataset.html#dataset.dataset_utils.load_and_prepare_data"><code class="docutils literal notranslate"><span class="pre">load_and_prepare_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataset.html#dataset.dataset_utils.save_history_profile"><code class="docutils literal notranslate"><span class="pre">save_history_profile()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="dataset.html#dataset.dataset_utils.standardize_features"><code class="docutils literal notranslate"><span class="pre">standardize_features()</span></code></a></li>
 </ul>
 </li>
@@ -114,10 +120,15 @@
 <li class="toctree-l1"><a class="reference internal" href="apprendimento_supervisionato.html">apprendimento_supervisionato package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="apprendimento_supervisionato.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="apprendimento_supervisionato.html#module-apprendimento_supervisionato.training">apprendimento_supervisionato.training module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apprendimento_supervisionato.html#apprendimento_supervisionato.training.evaluate_model_performance"><code class="docutils literal notranslate"><span class="pre">evaluate_model_performance()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="apprendimento_supervisionato.html#apprendimento_supervisionato.training.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apprendimento_supervisionato.html#apprendimento_supervisionato.training.make_json_serializable"><code class="docutils literal notranslate"><span class="pre">make_json_serializable()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="apprendimento_supervisionato.html#apprendimento_supervisionato.training.prepare_data"><code class="docutils literal notranslate"><span class="pre">prepare_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apprendimento_supervisionato.html#apprendimento_supervisionato.training.print_metrics_table"><code class="docutils literal notranslate"><span class="pre">print_metrics_table()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="apprendimento_supervisionato.html#apprendimento_supervisionato.training.save_best_params"><code class="docutils literal notranslate"><span class="pre">save_best_params()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="apprendimento_supervisionato.html#apprendimento_supervisionato.training.save_feature_importance"><code class="docutils literal notranslate"><span class="pre">save_feature_importance()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apprendimento_supervisionato.html#apprendimento_supervisionato.training.save_metrics_report"><code class="docutils literal notranslate"><span class="pre">save_metrics_report()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apprendimento_supervisionato.html#apprendimento_supervisionato.training.save_overfitting_analysis"><code class="docutils literal notranslate"><span class="pre">save_overfitting_analysis()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="apprendimento_supervisionato.html#apprendimento_supervisionato.training.save_performance_plot"><code class="docutils literal notranslate"><span class="pre">save_performance_plot()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="apprendimento_supervisionato.html#apprendimento_supervisionato.training.setup_directories"><code class="docutils literal notranslate"><span class="pre">setup_directories()</span></code></a></li>
 </ul>
@@ -128,8 +139,12 @@
 <li class="toctree-l1"><a class="reference internal" href="apprendimento_probabilistico.html">apprendimento_probabilistico package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="apprendimento_probabilistico.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="apprendimento_probabilistico.html#module-apprendimento_probabilistico.training">apprendimento_probabilistico.training module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apprendimento_probabilistico.html#apprendimento_probabilistico.training.build_sector_report"><code class="docutils literal notranslate"><span class="pre">build_sector_report()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apprendimento_probabilistico.html#apprendimento_probabilistico.training.build_top_n_report"><code class="docutils literal notranslate"><span class="pre">build_top_n_report()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="apprendimento_probabilistico.html#apprendimento_probabilistico.training.generate_visualizations"><code class="docutils literal notranslate"><span class="pre">generate_visualizations()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="apprendimento_probabilistico.html#apprendimento_probabilistico.training.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apprendimento_probabilistico.html#apprendimento_probabilistico.training.plot_comparison_real_vs_nb"><code class="docutils literal notranslate"><span class="pre">plot_comparison_real_vs_nb()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apprendimento_probabilistico.html#apprendimento_probabilistico.training.plot_sport_dominance"><code class="docutils literal notranslate"><span class="pre">plot_sport_dominance()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="apprendimento_probabilistico.html#apprendimento_probabilistico.training.prepare_data_nb"><code class="docutils literal notranslate"><span class="pre">prepare_data_nb()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="apprendimento_probabilistico.html#apprendimento_probabilistico.training.setup_directories"><code class="docutils literal notranslate"><span class="pre">setup_directories()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="apprendimento_probabilistico.html#apprendimento_probabilistico.training.train_nb_optimized"><code class="docutils literal notranslate"><span class="pre">train_nb_optimized()</span></code></a></li>

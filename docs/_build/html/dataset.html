@@ -51,8 +51,10 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">dataset package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-dataset.dataset_utils">dataset.dataset_utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dataset.dataset_utils.add_historical_features"><code class="docutils literal notranslate"><span class="pre">add_historical_features()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dataset.dataset_utils.get_vincitori_for_nb"><code class="docutils literal notranslate"><span class="pre">get_vincitori_for_nb()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dataset.dataset_utils.load_and_prepare_data"><code class="docutils literal notranslate"><span class="pre">load_and_prepare_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dataset.dataset_utils.save_history_profile"><code class="docutils literal notranslate"><span class="pre">save_history_profile()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dataset.dataset_utils.standardize_features"><code class="docutils literal notranslate"><span class="pre">standardize_features()</span></code></a></li>
 </ul>
 </li>
@@ -99,6 +101,14 @@
 <section id="module-dataset.dataset_utils">
 <span id="dataset-dataset-utils-module"></span><h2>dataset.dataset_utils module<a class="headerlink" href="#module-dataset.dataset_utils" title="Link to this heading"></a></h2>
 <dl class="py function">
+<dt class="sig sig-object py" id="dataset.dataset_utils.add_historical_features">
+<span class="sig-prename descclassname"><span class="pre">dataset.dataset_utils.</span></span><span class="sig-name descname"><span class="pre">add_historical_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dataset/dataset_utils.html#add_historical_features"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#dataset.dataset_utils.add_historical_features" title="Link to this definition"></a></dt>
+<dd><p>Crea feature storiche per rappresentare la conoscenza pregressa.</p>
+<p>Le feature descrivono il rendimento storico della nazione e della coppia
+nazione-sport prima dell’anno considerato.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="dataset.dataset_utils.get_vincitori_for_nb">
 <span class="sig-prename descclassname"><span class="pre">dataset.dataset_utils.</span></span><span class="sig-name descname"><span class="pre">get_vincitori_for_nb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_dataset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dataset/dataset_utils.html#get_vincitori_for_nb"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#dataset.dataset_utils.get_vincitori_for_nb" title="Link to this definition"></a></dt>
 <dd><p>Estrae dal dataset originale esclusivamente le righe relative ai medagliati.</p>
@@ -119,7 +129,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="dataset.dataset_utils.load_and_prepare_data">
-<span class="sig-prename descclassname"><span class="pre">dataset.dataset_utils.</span></span><span class="sig-name descname"><span class="pre">load_and_prepare_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dataset/dataset_utils.html#load_and_prepare_data"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#dataset.dataset_utils.load_and_prepare_data" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">dataset.dataset_utils.</span></span><span class="sig-name descname"><span class="pre">load_and_prepare_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mappings_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'modelli'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dataset/dataset_utils.html#load_and_prepare_data"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#dataset.dataset_utils.load_and_prepare_data" title="Link to this definition"></a></dt>
 <dd><p>Carica il dataset olimpico, esegue la pulizia dei nomi e prepara i dati.</p>
 <p>Operazioni:</p>
 <ul class="simple">
@@ -131,12 +141,21 @@
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parametri<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>file_path</strong> – Percorso del file CSV del dataset.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_path</strong> – Percorso del file CSV del dataset olimpico.</p></li>
+<li><p><strong>mappings_dir</strong> – Directory in cui salvare sport_mapping.pkl e noc_mapping.pkl.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Ritorna<span class="colon">:</span></dt>
-<dd class="field-even"><p>DataFrame pre-processato pronto per l’analisi.</p>
+<dd class="field-even"><p>DataFrame pre-processato pronto per l’apprendimento supervisionato.</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dataset.dataset_utils.save_history_profile">
+<span class="sig-prename descclassname"><span class="pre">dataset.dataset_utils.</span></span><span class="sig-name descname"><span class="pre">save_history_profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dataset/dataset_utils.html#save_history_profile"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#dataset.dataset_utils.save_history_profile" title="Link to this definition"></a></dt>
+<dd><p>Salva un profilo storico aggiornato per usare le stesse feature nel main.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -149,6 +168,8 @@
 <li><p>Trasformazione di entrambi i set (train e test).</p></li>
 <li><p>Salvataggio dello scaler per normalizzare i futuri input dell’utente.</p></li>
 </ol>
+<p>Questo scaler unico servirà l’intera pipeline logistica, forestale
+e i modelli basati su boosting (Gradient Boosting).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parametri<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">

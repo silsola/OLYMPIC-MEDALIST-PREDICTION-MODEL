@@ -47,11 +47,15 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Olympic Medalist Prediction Model</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">main module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.build_athlete_dataframe"><code class="docutils literal notranslate"><span class="pre">build_athlete_dataframe()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#main.find_sector_leader"><code class="docutils literal notranslate"><span class="pre">find_sector_leader()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#main.get_historical_context"><code class="docutils literal notranslate"><span class="pre">get_historical_context()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#main.get_input_validato"><code class="docutils literal notranslate"><span class="pre">get_input_validato()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#main.get_olympic_advice_detailed"><code class="docutils literal notranslate"><span class="pre">get_olympic_advice_detailed()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#main.load_resources"><code class="docutils literal notranslate"><span class="pre">load_resources()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#main.predict_medal_probability"><code class="docutils literal notranslate"><span class="pre">predict_medal_probability()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#main.print_results"><code class="docutils literal notranslate"><span class="pre">print_results()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="analisi_medagliere.html">analisi_medagliere module</a></li>
@@ -91,100 +95,57 @@
   <section id="module-main">
 <span id="main-module"></span><h1>main module<a class="headerlink" href="#module-main" title="Link to this heading"></a></h1>
 <dl class="py function">
+<dt class="sig sig-object py" id="main.build_athlete_dataframe">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">build_athlete_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resources</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sex_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noc_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sport_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#build_athlete_dataframe"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#main.build_athlete_dataframe" title="Link to this definition"></a></dt>
+<dd><p>Costruisce il vettore di input con feature categoriche e storiche.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="main.find_sector_leader">
 <span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">find_sector_leader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resources</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_sport_str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#find_sector_leader"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#main.find_sector_leader" title="Link to this definition"></a></dt>
 <dd><p>Utilizza il modello Naive Bayes per identificare la nazione dominante in uno sport.</p>
-<p>Analizza la distribuzione di probabilità per lo sport indicato e restituisce
-la nazione con la probabilità più alta di vittoria storica.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parametri<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>resources</strong> – Dizionario delle risorse caricate.</p></li>
-<li><p><strong>user_sport_str</strong> – Nome dello sport da analizzare.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Ritorna<span class="colon">:</span></dt>
-<dd class="field-even"><p>Una tupla (Nome Nazione Leader, Valore di Dominanza).</p>
-</dd>
-</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.get_historical_context">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">get_historical_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resources</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noc_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sport_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#get_historical_context"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#main.get_historical_context" title="Link to this definition"></a></dt>
+<dd><p>Recupera le feature storiche più adatte per la coppia NOC-Sport.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="main.get_input_validato">
-<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">get_input_validato</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">messaggio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tipo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opzioni</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#get_input_validato"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#main.get_input_validato" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">get_input_validato</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">messaggio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tipo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opzioni</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#get_input_validato"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#main.get_input_validato" title="Link to this definition"></a></dt>
 <dd><p>Gestisce l’input dell’utente garantendo la correttezza formale e semantica dei dati.</p>
-<p>Supporta la validazione di:</p>
-<ul class="simple">
-<li><p><strong>Sesso</strong>: (M/F)</p></li>
-<li><p><strong>Codici nazione (NOC)</strong>: presenti nel dataset</p></li>
-<li><p><strong>Nomi degli sport</strong>: con correzione automatica tramite Fuzzy Matching</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Parametri<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>messaggio</strong> – Testo da mostrare all’utente.</p></li>
-<li><p><strong>tipo</strong> – Tipo di dato atteso (“sex”, “noc”, “sport”).</p></li>
-<li><p><strong>range_val</strong> – Tuple (min, max) per i valori numerici.</p></li>
-<li><p><strong>opzioni</strong> – Lista di valori validi (per NOC e Sport).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Ritorna<span class="colon">:</span></dt>
-<dd class="field-even"><p>Il valore validato e normalizzato.</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="main.get_olympic_advice_detailed">
-<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">get_olympic_advice_detailed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob_ml</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sport</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#get_olympic_advice_detailed"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#main.get_olympic_advice_detailed" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">get_olympic_advice_detailed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob_ml</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sport</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kb_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#get_olympic_advice_detailed"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#main.get_olympic_advice_detailed" title="Link to this definition"></a></dt>
 <dd><p>Interroga la Knowledge Base (KB) in Prolog per generare spiegazioni simboliche.</p>
-<p>Combina la probabilità numerica del Machine Learning con le regole
-logiche definite in Prolog per fornire:</p>
-<ol class="arabic simple">
-<li><p>Un verdetto testuale basato sulla soglia di probabilità.</p></li>
-<li><p>Una lista di motivazioni logiche legate alla nazione e allo sport.</p></li>
-</ol>
-<dl class="field-list simple">
-<dt class="field-odd">Parametri<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>prob_ml</strong> – Probabilità di vittoria (0-1) calcolata dal Random Forest.</p></li>
-<li><p><strong>noc</strong> – Codice della nazione dell’atleta.</p></li>
-<li><p><strong>sport</strong> – Disciplina sportiva analizzata.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Ritorna<span class="colon">:</span></dt>
-<dd class="field-even"><p>Una tupla (Verdetto testuale, Lista di motivazioni logiche).</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="main.load_resources">
 <span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">load_resources</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#load_resources"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#main.load_resources" title="Link to this definition"></a></dt>
-<dd><p>Carica i modelli serializzati e i file di supporto necessari alle previsioni.</p>
-<p>Vengono caricati i seguenti componenti:</p>
-<ul class="simple">
-<li><p><strong>Modello Random Forest</strong>: e Scaler (Supervisionato).</p></li>
-<li><p><strong>Mapping categorici</strong>: per Sport e Nazioni.</p></li>
-<li><p><strong>Modello Naive Bayes</strong>: (Probabilistico).</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Ritorna<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Dizionario contenente tutti gli oggetti joblib caricati.</p>
-</dd>
-</dl>
+<dd><p>Carica i modelli serializzati (incluso il Gradient Boosting) e i file di supporto.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="main.main">
 <span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#main"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#main.main" title="Link to this definition"></a></dt>
-<dd><p>Workflow principale del sistema:
-1. Caricamento modelli.
-2. Input utente validato.
-3. Predizione numerica tramite Random Forest.
-4. Analisi probabilistica del leader di settore.
-5. Generazione di spiegazioni logiche tramite Prolog.
-6. Output formattato dei risultati.</p>
+<dd><p>Workflow principale del sistema con interazione ciclica.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.predict_medal_probability">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">predict_medal_probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaled_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#predict_medal_probability"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#main.predict_medal_probability" title="Link to this definition"></a></dt>
+<dd><p>Restituisce la probabilità associata alla classe positiva “ha vinto medaglia”.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.print_results">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">print_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob_rf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prob_gb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sport</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">leader_noc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dominanza</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">history_source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">advice</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reasons</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#print_results"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#main.print_results" title="Link to this definition"></a></dt>
+<dd><p>Stampa l’analisi finale includendo i risultati comparativi di entrambi i modelli avanzati.</p>
 </dd></dl>
 
 </section>

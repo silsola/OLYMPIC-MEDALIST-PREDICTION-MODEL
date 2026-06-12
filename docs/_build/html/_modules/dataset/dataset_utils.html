@@ -70,20 +70,162 @@
            <div itemprop="articleBody">
              
   <h1>Codice sorgente per dataset.dataset_utils</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">joblib</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Modulo di utilità per la gestione e il preprocessing del dataset olimpico.</span>
-<span class="sd">Contiene funzioni per il caricamento, la pulizia, la standardizzazione dei dati</span>
-<span class="sd">e l&#39;estrazione di subset specifici per i modelli di machine learning.</span>
+
+<span class="sd">Questo modulo concentra le operazioni riutilizzabili:</span>
+<span class="sd">caricamento del dataset, creazione del target, codifica delle variabili categoriche,</span>
+<span class="sd">salvataggio dei mapping e standardizzazione delle feature.</span>
+
+<span class="sd">Fornisce il medesimo set di feature scalate a tutti i modelli supervisionati:</span>
+<span class="sd">* Logistic Regression</span>
+<span class="sd">* Random Forest Classifier</span>
+<span class="sd">* Gradient Boosting Classifier</span>
 <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="n">MEDAL_VALUES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Gold&quot;</span><span class="p">,</span> <span class="s2">&quot;Silver&quot;</span><span class="p">,</span> <span class="s2">&quot;Bronze&quot;</span><span class="p">}</span>
+<span class="n">BASE_FEATURE_COLUMNS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Sex&quot;</span><span class="p">,</span> <span class="s2">&quot;NOC&quot;</span><span class="p">,</span> <span class="s2">&quot;Sport&quot;</span><span class="p">]</span>
+<span class="n">HISTORICAL_FEATURE_COLUMNS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;NOC_Total_Medals_Before&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;NOC_Medal_Rate_Before&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;NOC_Sport_Medals_Before&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;NOC_Sport_Medal_Rate_Before&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Sport_Medal_Rate_Before&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">FEATURE_COLUMNS</span> <span class="o">=</span> <span class="n">BASE_FEATURE_COLUMNS</span> <span class="o">+</span> <span class="n">HISTORICAL_FEATURE_COLUMNS</span>
+<span class="n">TARGET_COLUMN</span> <span class="o">=</span> <span class="s2">&quot;Won_Medal&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_normalize_columns</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Normalizza i nomi colonna mantenendo la semantica del dataset olimpico.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">df</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_validate_columns</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">required_columns</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Verifica che il dataset contenga tutte le colonne richieste.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">missing_columns</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">required_columns</span><span class="p">)</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">missing_columns</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Colonne mancanti nel dataset: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">missing_columns</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_save_mapping</span><span class="p">(</span><span class="n">mapping</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Salva un mapping categorico nella directory indicata.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">mapping</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_merge_group_history</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">group_columns</span><span class="p">,</span> <span class="n">prefix</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Aggiunge statistiche cumulative precedenti all&#39;anno corrente per un gruppo.</span>
+
+<span class="sd">    Il calcolo avviene aggregando per anno e sottraendo il valore dell&#39;anno</span>
+<span class="sd">    corrente dal cumulativo, in modo da non usare informazioni future o della</span>
+<span class="sd">    stessa edizione olimpica per predire quella riga.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">yearly</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">group_columns</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;Year&quot;</span><span class="p">],</span> <span class="n">observed</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="n">TARGET_COLUMN</span><span class="p">]</span>
+        <span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">Appearances_Year</span><span class="o">=</span><span class="s2">&quot;size&quot;</span><span class="p">,</span> <span class="n">Medals_Year</span><span class="o">=</span><span class="s2">&quot;sum&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">group_columns</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;Year&quot;</span><span class="p">])</span>
+    <span class="p">)</span>
+
+    <span class="n">group_obj</span> <span class="o">=</span> <span class="n">yearly</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">group_columns</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">yearly</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_Appearances_Before&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">group_obj</span><span class="p">[</span><span class="s2">&quot;Appearances_Year&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span> <span class="o">-</span> <span class="n">yearly</span><span class="p">[</span><span class="s2">&quot;Appearances_Year&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">yearly</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_Medals_Before&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">group_obj</span><span class="p">[</span><span class="s2">&quot;Medals_Year&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span> <span class="o">-</span> <span class="n">yearly</span><span class="p">[</span><span class="s2">&quot;Medals_Year&quot;</span><span class="p">]</span>
+    <span class="n">yearly</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_Medal_Rate_Before&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+        <span class="n">yearly</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_Appearances_Before&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">yearly</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_Medals_Before&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">yearly</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_Appearances_Before&quot;</span><span class="p">],</span>
+        <span class="mf">0.0</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">keep_columns</span> <span class="o">=</span> <span class="n">group_columns</span> <span class="o">+</span> <span class="p">[</span>
+        <span class="s2">&quot;Year&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_Medals_Before&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_Medal_Rate_Before&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">yearly</span><span class="p">[</span><span class="n">keep_columns</span><span class="p">],</span> <span class="n">on</span><span class="o">=</span><span class="n">group_columns</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;Year&quot;</span><span class="p">],</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="add_historical_features">
+<a class="viewcode-back" href="../../dataset.html#dataset.dataset_utils.add_historical_features">[documenti]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_historical_features</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Crea feature storiche per rappresentare la conoscenza pregressa.</span>
+
+<span class="sd">    Le feature descrivono il rendimento storico della nazione e della coppia</span>
+<span class="sd">    nazione-sport prima dell&#39;anno considerato.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">_merge_group_history</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;NOC&quot;</span><span class="p">],</span> <span class="s2">&quot;NOC_Total&quot;</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;NOC_Total_Medal_Rate_Before&quot;</span><span class="p">:</span> <span class="s2">&quot;NOC_Medal_Rate_Before&quot;</span><span class="p">})</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">_merge_group_history</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;NOC&quot;</span><span class="p">,</span> <span class="s2">&quot;Sport&quot;</span><span class="p">],</span> <span class="s2">&quot;NOC_Sport&quot;</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">_merge_group_history</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Sport&quot;</span><span class="p">],</span> <span class="s2">&quot;Sport&quot;</span><span class="p">)</span>
+
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Sport_Medal_Rate_Before&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Sport_Medal_Rate_Before&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">HISTORICAL_FEATURE_COLUMNS</span><span class="p">:</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df</span></div>
+
+
+
+<div class="viewcode-block" id="save_history_profile">
+<a class="viewcode-back" href="../../dataset.html#dataset.dataset_utils.save_history_profile">[documenti]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">save_history_profile</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Salva un profilo storico aggiornato per usare le stesse feature nel main.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">latest_rows</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;Year&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="n">by_noc_sport</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">latest_rows</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;NOC&quot;</span><span class="p">,</span> <span class="s2">&quot;Sport&quot;</span><span class="p">],</span> <span class="n">observed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">by_noc_sport</span><span class="p">[(</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;NOC&quot;</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;Sport&quot;</span><span class="p">]))]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">column</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">column</span><span class="p">])</span> <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">HISTORICAL_FEATURE_COLUMNS</span>
+        <span class="p">}</span>
+
+    <span class="n">by_noc</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">latest_rows</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;NOC&quot;</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">by_noc</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;NOC&quot;</span><span class="p">])]</span> <span class="o">=</span> <span class="p">{</span><span class="n">column</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">column</span><span class="p">])</span> <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">HISTORICAL_FEATURE_COLUMNS</span><span class="p">}</span>
+
+    <span class="n">by_sport</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">latest_rows</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;Sport&quot;</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">by_sport</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;Sport&quot;</span><span class="p">])]</span> <span class="o">=</span> <span class="p">{</span><span class="n">column</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">column</span><span class="p">])</span> <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">HISTORICAL_FEATURE_COLUMNS</span><span class="p">}</span>
+
+    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="n">column</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">latest_rows</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())</span> <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">HISTORICAL_FEATURE_COLUMNS</span><span class="p">}</span>
+
+    <span class="n">profile</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;feature_columns&quot;</span><span class="p">:</span> <span class="n">FEATURE_COLUMNS</span><span class="p">,</span>
+        <span class="s2">&quot;historical_feature_columns&quot;</span><span class="p">:</span> <span class="n">HISTORICAL_FEATURE_COLUMNS</span><span class="p">,</span>
+        <span class="s2">&quot;by_noc_sport&quot;</span><span class="p">:</span> <span class="n">by_noc_sport</span><span class="p">,</span>
+        <span class="s2">&quot;by_noc&quot;</span><span class="p">:</span> <span class="n">by_noc</span><span class="p">,</span>
+        <span class="s2">&quot;by_sport&quot;</span><span class="p">:</span> <span class="n">by_sport</span><span class="p">,</span>
+        <span class="s2">&quot;defaults&quot;</span><span class="p">:</span> <span class="n">defaults</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="s2">&quot;history_profile.pkl&quot;</span><span class="p">))</span></div>
+
+
 
 <div class="viewcode-block" id="load_and_prepare_data">
 <a class="viewcode-back" href="../../dataset.html#dataset.dataset_utils.load_and_prepare_data">[documenti]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">load_and_prepare_data</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_and_prepare_data</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">mappings_dir</span><span class="o">=</span><span class="s2">&quot;modelli&quot;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Carica il dataset olimpico, esegue la pulizia dei nomi e prepara i dati.</span>
 <span class="sd">    </span>
@@ -95,27 +237,36 @@
 <span class="sd">    * Codifica la nazione (NOC) in formato numerico.</span>
 <span class="sd">    * Genera e salva i mapping per &#39;Sport&#39; e &#39;NOC&#39;.</span>
 
-<span class="sd">    :param file_path: Percorso del file CSV del dataset.</span>
-<span class="sd">    :return: DataFrame pre-processato pronto per l&#39;analisi.</span>
+<span class="sd">    :param file_path: Percorso del file CSV del dataset olimpico.</span>
+<span class="sd">    :param mappings_dir: Directory in cui salvare sport_mapping.pkl e noc_mapping.pkl.</span>
+<span class="sd">    :return: DataFrame pre-processato pronto per l&#39;apprendimento supervisionato.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">_normalize_columns</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="n">_validate_columns</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Year&quot;</span><span class="p">,</span> <span class="s2">&quot;Sex&quot;</span><span class="p">,</span> <span class="s2">&quot;NOC&quot;</span><span class="p">,</span> <span class="s2">&quot;Sport&quot;</span><span class="p">,</span> <span class="s2">&quot;Medal&quot;</span><span class="p">])</span>
 
-    <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">TARGET_COLUMN</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Medal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">MEDAL_VALUES</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Won_Medal&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Medal&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Gold&#39;</span><span class="p">,</span> <span class="s1">&#39;Silver&#39;</span><span class="p">,</span> <span class="s1">&#39;Bronze&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s2">&quot;Year&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">BASE_FEATURE_COLUMNS</span> <span class="o">+</span> <span class="p">[</span><span class="n">TARGET_COLUMN</span><span class="p">]]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Year&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Year&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;NOC&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;NOC&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Sport&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Sport&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">add_historical_features</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s1">&#39;M&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Sex&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Sex&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s2">&quot;M&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;F&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Sex&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Sex&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Sex&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Sport&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Sport&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
-    <span class="n">sport_mapping</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Sport&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span><span class="p">))</span>
-    <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">sport_mapping</span><span class="p">,</span> <span class="s1">&#39;modelli/sport_mapping.pkl&#39;</span><span class="p">)</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s1">&#39;modelli&#39;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Sport_cat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Sport&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">codes</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Sport&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Sport&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span>
+    <span class="n">sport_mapping</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Sport&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span><span class="p">))</span>
+    <span class="n">_save_mapping</span><span class="p">(</span><span class="n">sport_mapping</span><span class="p">,</span> <span class="n">mappings_dir</span><span class="p">,</span> <span class="s2">&quot;sport_mapping.pkl&quot;</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Sport&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Sport&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">codes</span>
 
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;NOC&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;NOC&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
-    <span class="n">noc_mapping</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;NOC&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span><span class="p">))</span>
-    <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">noc_mapping</span><span class="p">,</span> <span class="s1">&#39;modelli/noc_mapping.pkl&#39;</span><span class="p">)</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;NOC_cat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;NOC&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">codes</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;NOC&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;NOC&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span>
+    <span class="n">noc_mapping</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;NOC&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span><span class="p">))</span>
+    <span class="n">_save_mapping</span><span class="p">(</span><span class="n">noc_mapping</span><span class="p">,</span> <span class="n">mappings_dir</span><span class="p">,</span> <span class="s2">&quot;noc_mapping.pkl&quot;</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;NOC&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;NOC&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">codes</span>
+    <span class="n">save_history_profile</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">mappings_dir</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">df</span></div>
 
@@ -133,6 +284,9 @@
 <span class="sd">    2. Trasformazione di entrambi i set (train e test).</span>
 <span class="sd">    3. Salvataggio dello scaler per normalizzare i futuri input dell&#39;utente.</span>
 
+<span class="sd">    Questo scaler unico servirà l&#39;intera pipeline logistica, forestale </span>
+<span class="sd">    e i modelli basati su boosting (Gradient Boosting).</span>
+
 <span class="sd">    :param X_train: Feature del set di addestramento.</span>
 <span class="sd">    :param X_test: Feature del set di test.</span>
 <span class="sd">    :param scaler_path: Percorso dove salvare l&#39;oggetto StandardScaler serializzato.</span>
@@ -141,7 +295,10 @@
     <span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
     <span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
     <span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-    <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">scaler</span><span class="p">,</span> <span class="n">scaler_path</span><span class="p">)</span> 
+    <span class="n">scaler_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">scaler_path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">scaler_dir</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">scaler_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">scaler</span><span class="p">,</span> <span class="n">scaler_path</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">X_train</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">X_test</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span></div>
 
@@ -167,9 +324,11 @@
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path_dataset</span><span class="p">)</span>
-        <span class="c1"># Filtro medaglie (Oro, Argento, Bronzo)</span>
-        <span class="n">medaglie_valide</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Gold&#39;</span><span class="p">,</span> <span class="s1">&#39;Silver&#39;</span><span class="p">,</span> <span class="s1">&#39;Bronze&#39;</span><span class="p">]</span>
-        <span class="n">vincitori</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Medal&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">medaglie_valide</span><span class="p">)]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">_normalize_columns</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="n">_validate_columns</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;NOC&quot;</span><span class="p">,</span> <span class="s2">&quot;Sport&quot;</span><span class="p">,</span> <span class="s2">&quot;Medal&quot;</span><span class="p">])</span>
+        <span class="n">vincitori</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Medal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">MEDAL_VALUES</span><span class="p">)]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">vincitori</span><span class="p">[</span><span class="s2">&quot;NOC&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vincitori</span><span class="p">[</span><span class="s2">&quot;NOC&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">vincitori</span><span class="p">[</span><span class="s2">&quot;Sport&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vincitori</span><span class="p">[</span><span class="s2">&quot;Sport&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">vincitori</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[!] Errore nel caricamento: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>

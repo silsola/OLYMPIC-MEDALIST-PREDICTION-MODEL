@@ -53,8 +53,12 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">apprendimento_probabilistico package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-apprendimento_probabilistico.training">apprendimento_probabilistico.training module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_probabilistico.training.build_sector_report"><code class="docutils literal notranslate"><span class="pre">build_sector_report()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_probabilistico.training.build_top_n_report"><code class="docutils literal notranslate"><span class="pre">build_top_n_report()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#apprendimento_probabilistico.training.generate_visualizations"><code class="docutils literal notranslate"><span class="pre">generate_visualizations()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#apprendimento_probabilistico.training.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_probabilistico.training.plot_comparison_real_vs_nb"><code class="docutils literal notranslate"><span class="pre">plot_comparison_real_vs_nb()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_probabilistico.training.plot_sport_dominance"><code class="docutils literal notranslate"><span class="pre">plot_sport_dominance()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#apprendimento_probabilistico.training.prepare_data_nb"><code class="docutils literal notranslate"><span class="pre">prepare_data_nb()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#apprendimento_probabilistico.training.setup_directories"><code class="docutils literal notranslate"><span class="pre">setup_directories()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#apprendimento_probabilistico.training.train_nb_optimized"><code class="docutils literal notranslate"><span class="pre">train_nb_optimized()</span></code></a></li>
@@ -100,91 +104,58 @@
 <section id="module-apprendimento_probabilistico.training">
 <span id="apprendimento-probabilistico-training-module"></span><h2>apprendimento_probabilistico.training module<a class="headerlink" href="#module-apprendimento_probabilistico.training" title="Link to this heading"></a></h2>
 <dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_probabilistico.training.build_sector_report">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_probabilistico.training.</span></span><span class="sig-name descname"><span class="pre">build_sector_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sport_columns</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_probabilistico/training.html#build_sector_report"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_probabilistico.training.build_sector_report" title="Link to this definition"></a></dt>
+<dd><p>Crea una tabella con la nazione leader stimata per ogni sport.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_probabilistico.training.build_top_n_report">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_probabilistico.training.</span></span><span class="sig-name descname"><span class="pre">build_top_n_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sport_columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_probabilistico/training.html#build_top_n_report"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_probabilistico.training.build_top_n_report" title="Link to this definition"></a></dt>
+<dd><p>Crea un report con le prime N nazioni più probabili per ogni sport.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="apprendimento_probabilistico.training.generate_visualizations">
 <span class="sig-prename descclassname"><span class="pre">apprendimento_probabilistico.training.</span></span><span class="sig-name descname"><span class="pre">generate_visualizations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sport_columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_results</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_probabilistico/training.html#generate_visualizations"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_probabilistico.training.generate_visualizations" title="Link to this definition"></a></dt>
 <dd><p>Produce i grafici relativi all’accuratezza del modello e alle probabilità predittive.</p>
-<p>Genera i seguenti file:</p>
-<ul class="simple">
-<li><p><strong>ottimizzazione_nb.png</strong>: Andamento dell’accuratezza al variare di Alpha.</p></li>
-<li><p><strong>dominanza_swimming.png</strong>: Top 10 nazioni dominanti nel nuoto.</p></li>
-<li><p><strong>dominanza_fencing.png</strong>: Top 10 nazioni dominanti nella scherma.</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Parametri<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>model</strong> – Il modello Naive Bayes addestrato.</p></li>
-<li><p><strong>sport_columns</strong> – Elenco dei nomi degli sport utilizzati come feature.</p></li>
-<li><p><strong>grid_results</strong> – Risultati estratti dalla GridSearchCV.</p></li>
-</ul>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apprendimento_probabilistico.training.main">
 <span class="sig-prename descclassname"><span class="pre">apprendimento_probabilistico.training.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_probabilistico/training.html#main"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_probabilistico.training.main" title="Link to this definition"></a></dt>
 <dd><p>Coordina l’intero workflow dell’apprendimento probabilistico.</p>
-<p>Fasi del processo:</p>
-<ol class="arabic simple">
-<li><p>Inizializzazione delle cartelle di output.</p></li>
-<li><p>Caricamento dei dati tramite utilità esterne.</p></li>
-<li><p>Addestramento con ricerca della configurazione ottimale.</p></li>
-<li><p>Esportazione del modello e delle visualizzazioni statistiche.</p></li>
-</ol>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_probabilistico.training.plot_comparison_real_vs_nb">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_probabilistico.training.</span></span><span class="sig-name descname"><span class="pre">plot_comparison_real_vs_nb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sport_columns</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_probabilistico/training.html#plot_comparison_real_vs_nb"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_probabilistico.training.plot_comparison_real_vs_nb" title="Link to this definition"></a></dt>
+<dd><p>Genera un grafico a dispersione confrontando la dominanza frequentista
+calcolata direttamente sulla matrice dei dati con le predizioni del modello.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_probabilistico.training.plot_sport_dominance">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_probabilistico.training.</span></span><span class="sig-name descname"><span class="pre">plot_sport_dominance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sport_columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sport_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_probabilistico/training.html#plot_sport_dominance"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_probabilistico.training.plot_sport_dominance" title="Link to this definition"></a></dt>
+<dd><p>Salva il grafico probabilistico delle nazioni più probabili per uno sport specifico.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apprendimento_probabilistico.training.prepare_data_nb">
 <span class="sig-prename descclassname"><span class="pre">apprendimento_probabilistico.training.</span></span><span class="sig-name descname"><span class="pre">prepare_data_nb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vincitori</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_probabilistico/training.html#prepare_data_nb"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_probabilistico.training.prepare_data_nb" title="Link to this definition"></a></dt>
 <dd><p>Trasforma il dataset in un formato adatto per il classificatore Multinomial Naive Bayes.</p>
-<p>Il preprocessing include:</p>
-<ol class="arabic simple">
-<li><p>Filtraggio delle nazioni con almeno 3 medaglie storiche.</p></li>
-<li><p>Applicazione della codifica One-Hot Encoding per le discipline sportive.</p></li>
-<li><p>Estrazione dei nomi delle colonne per le feature future.</p></li>
-</ol>
-<dl class="field-list simple">
-<dt class="field-odd">Parametri<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>vincitori</strong> (<em>pandas.DataFrame</em>) – DataFrame contenente i vincitori storici medagliati.</p>
-</dd>
-<dt class="field-even">Ritorna<span class="colon">:</span></dt>
-<dd class="field-even"><p>Una tupla contenente (X_values, y_values, lista_colonne_sport).</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apprendimento_probabilistico.training.setup_directories">
 <span class="sig-prename descclassname"><span class="pre">apprendimento_probabilistico.training.</span></span><span class="sig-name descname"><span class="pre">setup_directories</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_probabilistico/training.html#setup_directories"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_probabilistico.training.setup_directories" title="Link to this definition"></a></dt>
 <dd><p>Crea la gerarchia di cartelle necessaria per organizzare i risultati del training.</p>
-<p>Vengono create le seguenti directory:</p>
-<ul class="simple">
-<li><p><strong>modelli/</strong>: per i file .pkl del classificatore.</p></li>
-<li><p><strong>grafici/</strong>: per i plot PNG sulla dominanza.</p></li>
-<li><p><strong>iperparametri/</strong>: per i file JSON di configurazione e tabelle CSV.</p></li>
-</ul>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apprendimento_probabilistico.training.train_nb_optimized">
 <span class="sig-prename descclassname"><span class="pre">apprendimento_probabilistico.training.</span></span><span class="sig-name descname"><span class="pre">train_nb_optimized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_probabilistico/training.html#train_nb_optimized"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_probabilistico.training.train_nb_optimized" title="Link to this definition"></a></dt>
 <dd><p>Esegue la ricerca degli iperparametri (Grid Search) per il modello Naive Bayes.</p>
-<p>Ottimizza i seguenti parametri:</p>
-<ul class="simple">
-<li><p><strong>alpha</strong>: Il parametro di Laplace Smoothing (per gestire sport rari).</p></li>
-<li><p><strong>fit_prior</strong>: Se imparare o meno le probabilità a priori delle classi.</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Parametri<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> – Matrice delle feature (Sport codificati).</p></li>
-<li><p><strong>y</strong> – Vettore target (Nazioni NOC).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Ritorna<span class="colon">:</span></dt>
-<dd class="field-even"><p>Il miglior modello, i migliori parametri e i risultati della validazione.</p>
-</dd>
-</dl>
 </dd></dl>
 
 </section>

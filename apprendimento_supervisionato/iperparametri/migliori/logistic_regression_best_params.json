@@ -9,7 +9,7 @@
     "multi_class": "deprecated",
     "n_jobs": null,
     "penalty": "l2",
-    "random_state": null,
+    "random_state": 42,
     "solver": "lbfgs",
     "tol": 0.0001,
     "verbose": 0,

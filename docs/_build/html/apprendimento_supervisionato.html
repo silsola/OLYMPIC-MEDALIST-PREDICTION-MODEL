@@ -53,10 +53,15 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">apprendimento_supervisionato package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-apprendimento_supervisionato.training">apprendimento_supervisionato.training module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_supervisionato.training.evaluate_model_performance"><code class="docutils literal notranslate"><span class="pre">evaluate_model_performance()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#apprendimento_supervisionato.training.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_supervisionato.training.make_json_serializable"><code class="docutils literal notranslate"><span class="pre">make_json_serializable()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#apprendimento_supervisionato.training.prepare_data"><code class="docutils literal notranslate"><span class="pre">prepare_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_supervisionato.training.print_metrics_table"><code class="docutils literal notranslate"><span class="pre">print_metrics_table()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#apprendimento_supervisionato.training.save_best_params"><code class="docutils literal notranslate"><span class="pre">save_best_params()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#apprendimento_supervisionato.training.save_feature_importance"><code class="docutils literal notranslate"><span class="pre">save_feature_importance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_supervisionato.training.save_metrics_report"><code class="docutils literal notranslate"><span class="pre">save_metrics_report()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apprendimento_supervisionato.training.save_overfitting_analysis"><code class="docutils literal notranslate"><span class="pre">save_overfitting_analysis()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#apprendimento_supervisionato.training.save_performance_plot"><code class="docutils literal notranslate"><span class="pre">save_performance_plot()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#apprendimento_supervisionato.training.setup_directories"><code class="docutils literal notranslate"><span class="pre">setup_directories()</span></code></a></li>
 </ul>
@@ -102,93 +107,69 @@
 <section id="module-apprendimento_supervisionato.training">
 <span id="apprendimento-supervisionato-training-module"></span><h2>apprendimento_supervisionato.training module<a class="headerlink" href="#module-apprendimento_supervisionato.training" title="Link to this heading"></a></h2>
 <dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_supervisionato.training.evaluate_model_performance">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_supervisionato.training.</span></span><span class="sig-name descname"><span class="pre">evaluate_model_performance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_supervisionato/training.html#evaluate_model_performance"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_supervisionato.training.evaluate_model_performance" title="Link to this definition"></a></dt>
+<dd><p>Calcola le metriche complete sia sul Train Set che sul Test Set.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="apprendimento_supervisionato.training.main">
 <span class="sig-prename descclassname"><span class="pre">apprendimento_supervisionato.training.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_supervisionato/training.html#main"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_supervisionato.training.main" title="Link to this definition"></a></dt>
-<dd><p>Punto di ingresso principale per l’addestramento supervisionato.</p>
-<p>Esegue sequenzialmente:</p>
-<ol class="arabic simple">
-<li><p>Setup delle directory e preparazione dati.</p></li>
-<li><p>Scaling delle feature tramite StandardScaler.</p></li>
-<li><p>Training e valutazione di Logistic Regression.</p></li>
-<li><p>GridSearch per l’ottimizzazione del Random Forest.</p></li>
-<li><p>Generazione di report tabellari e grafici.</p></li>
-</ol>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_supervisionato.training.make_json_serializable">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_supervisionato.training.</span></span><span class="sig-name descname"><span class="pre">make_json_serializable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_supervisionato/training.html#make_json_serializable"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_supervisionato.training.make_json_serializable" title="Link to this definition"></a></dt>
+<dd><p>Converte tipi NumPy/scikit-learn in valori salvabili in JSON.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apprendimento_supervisionato.training.prepare_data">
 <span class="sig-prename descclassname"><span class="pre">apprendimento_supervisionato.training.</span></span><span class="sig-name descname"><span class="pre">prepare_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_supervisionato/training.html#prepare_data"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_supervisionato.training.prepare_data" title="Link to this definition"></a></dt>
 <dd><p>Esegue il caricamento e il preprocessing avanzato dei dati olimpici.</p>
-<p>Il processo include:</p>
-<ol class="arabic simple">
-<li><p>Definizione della variabile target “Won_Medal”.</p></li>
-<li><p>Pulizia dei valori nulli e mapping del genere.</p></li>
-<li><p>Conversione di Sport e Nazione in codici categorici numerici.</p></li>
-<li><p>Suddivisione del dataset con tecnica di stratificazione.</p></li>
-</ol>
-<dl class="field-list simple">
-<dt class="field-odd">Ritorna<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Una tupla contenente (X_train, X_test, y_train, y_test).</p>
-</dd>
-</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_supervisionato.training.print_metrics_table">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_supervisionato.training.</span></span><span class="sig-name descname"><span class="pre">print_metrics_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics_summary</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_supervisionato/training.html#print_metrics_table"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_supervisionato.training.print_metrics_table" title="Link to this definition"></a></dt>
+<dd><p>Stampa una tabella compatta di metriche per modello.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apprendimento_supervisionato.training.save_best_params">
 <span class="sig-prename descclassname"><span class="pre">apprendimento_supervisionato.training.</span></span><span class="sig-name descname"><span class="pre">save_best_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">best_params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_supervisionato/training.html#save_best_params"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_supervisionato.training.save_best_params" title="Link to this definition"></a></dt>
 <dd><p>Salva i migliori iperparametri individuati in formato JSON.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parametri<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>model_name</strong> – Nome del modello (es. “random_forest”).</p></li>
-<li><p><strong>best_params</strong> – Dizionario dei parametri ottimali.</p></li>
-</ul>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apprendimento_supervisionato.training.save_feature_importance">
 <span class="sig-prename descclassname"><span class="pre">apprendimento_supervisionato.training.</span></span><span class="sig-name descname"><span class="pre">save_feature_importance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_names</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_supervisionato/training.html#save_feature_importance"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_supervisionato.training.save_feature_importance" title="Link to this definition"></a></dt>
 <dd><p>Genera il grafico dell’importanza delle variabili per il modello Random Forest.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parametri<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>model</strong> – Modello Random Forest addestrato.</p></li>
-<li><p><strong>feature_names</strong> – Nomi delle colonne (Sex, NOC, Sport).</p></li>
-</ul>
-</dd>
-</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_supervisionato.training.save_metrics_report">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_supervisionato.training.</span></span><span class="sig-name descname"><span class="pre">save_metrics_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results_summary</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">performance_summary</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_supervisionato/training.html#save_metrics_report"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_supervisionato.training.save_metrics_report" title="Link to this definition"></a></dt>
+<dd><p>Salva le metriche di Cross-Validation, Training e Test in formato JSON.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apprendimento_supervisionato.training.save_overfitting_analysis">
+<span class="sig-prename descclassname"><span class="pre">apprendimento_supervisionato.training.</span></span><span class="sig-name descname"><span class="pre">save_overfitting_analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">performance_summary</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_supervisionato/training.html#save_overfitting_analysis"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_supervisionato.training.save_overfitting_analysis" title="Link to this definition"></a></dt>
+<dd><p>Genera il grafico comparativo multi-pannello (Train vs Test) per verificare l’overfitting.
+Questa funzione crea un sotto-grafico per ciascun modello registrato.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apprendimento_supervisionato.training.save_performance_plot">
 <span class="sig-prename descclassname"><span class="pre">apprendimento_supervisionato.training.</span></span><span class="sig-name descname"><span class="pre">save_performance_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results_summary</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_supervisionato/training.html#save_performance_plot"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_supervisionato.training.save_performance_plot" title="Link to this definition"></a></dt>
 <dd><p>Genera un grafico di confronto tra le metriche dei vari modelli.</p>
-<p>Vengono confrontate le medie e le deviazioni standard di:</p>
-<ul class="simple">
-<li><p>Accuracy</p></li>
-<li><p>Precision</p></li>
-<li><p>Recall</p></li>
-<li><p>F1-Score</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Parametri<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>results_summary</strong> – Dizionario contenente i risultati della Cross-Validation.</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apprendimento_supervisionato.training.setup_directories">
 <span class="sig-prename descclassname"><span class="pre">apprendimento_supervisionato.training.</span></span><span class="sig-name descname"><span class="pre">setup_directories</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/apprendimento_supervisionato/training.html#setup_directories"><span class="viewcode-link"><span class="pre">[sorgente]</span></span></a><a class="headerlink" href="#apprendimento_supervisionato.training.setup_directories" title="Link to this definition"></a></dt>
 <dd><p>Inizializza la struttura delle cartelle necessaria per i risultati.</p>
-<p>Vengono create le seguenti sottodirectory:</p>
-<ul class="simple">
-<li><p><strong>modelli/</strong>: per i file .pkl dei classificatori e dello scaler.</p></li>
-<li><p><strong>grafici/</strong>: per i plot di confronto e feature importance.</p></li>
-<li><p><strong>iperparametri/</strong>: per i log delle ricerche GridSearch.</p></li>
-</ul>
 </dd></dl>
 
 </section>

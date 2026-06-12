@@ -1,0 +1,356 @@
+Sport,Rank,NOC,Probabilita
+3x3 Basketball,1,USA,0.166667
+3x3 Basketball,2,ROC,0.166667
+3x3 Basketball,3,GER,0.083333
+3x3 Basketball,4,FRA,0.083333
+3x3 Basketball,5,CHN,0.083333
+Aeronautics,1,SUI,1.0
+Aeronautics,2,USA,0.0
+Aeronautics,3,GBR,0.0
+Aeronautics,4,URS,0.0
+Aeronautics,5,GER,0.0
+Alpinism,1,GER,0.5
+Alpinism,2,SUI,0.5
+Alpinism,3,USA,0.0
+Alpinism,4,GBR,0.0
+Alpinism,5,URS,0.0
+Archery,1,KOR,0.217918
+Archery,2,USA,0.145278
+Archery,3,FRA,0.125908
+Archery,4,BEL,0.125908
+Archery,5,CHN,0.053269
+Art Competitions,1,GER,0.167742
+Art Competitions,2,FRA,0.096774
+Art Competitions,3,ITA,0.090323
+Art Competitions,4,AUT,0.064516
+Art Competitions,5,USA,0.058065
+Artistic Gymnastics,1,USA,0.203125
+Artistic Gymnastics,2,CHN,0.1875
+Artistic Gymnastics,3,JPN,0.125
+Artistic Gymnastics,4,ROC,0.109375
+Artistic Gymnastics,5,BRA,0.078125
+Artistic Swimming,1,CHN,0.333333
+Artistic Swimming,2,UKR,0.15873
+Artistic Swimming,3,ROC,0.15873
+Artistic Swimming,4,USA,0.142857
+Artistic Swimming,5,ESP,0.142857
+Athletics,1,USA,0.269719
+Athletics,2,GBR,0.089075
+Athletics,3,URS,0.05485
+Athletics,4,JAM,0.041478
+Athletics,5,GER,0.037398
+Badminton,1,CHN,0.384259
+Badminton,2,KOR,0.185185
+Badminton,3,INA,0.148148
+Badminton,4,MAS,0.078704
+Badminton,5,DEN,0.064815
+Baseball,1,CUB,0.333333
+Baseball,2,USA,0.202381
+Baseball,3,JPN,0.190476
+Baseball,4,KOR,0.142857
+Baseball,5,AUS,0.071429
+Baseball/Softball,1,USA,0.333333
+Baseball/Softball,2,JPN,0.333333
+Baseball/Softball,3,DOM,0.205128
+Baseball/Softball,4,CAN,0.128205
+Baseball/Softball,5,GBR,0.0
+Basketball,1,USA,0.31807
+Basketball,2,URS,0.119379
+Basketball,3,FRA,0.070319
+Basketball,4,YUG,0.068684
+Basketball,5,AUS,0.067866
+Basque Pelota,1,ESP,1.0
+Basque Pelota,2,USA,0.0
+Basque Pelota,3,GBR,0.0
+Basque Pelota,4,URS,0.0
+Basque Pelota,5,GER,0.0
+Beach Volleyball,1,BRA,0.291667
+Beach Volleyball,2,USA,0.229167
+Beach Volleyball,3,GER,0.083333
+Beach Volleyball,4,AUS,0.0625
+Beach Volleyball,5,SUI,0.0625
+Boxing,1,USA,0.113462
+Boxing,2,CUB,0.076923
+Boxing,3,GBR,0.060577
+Boxing,4,URS,0.049038
+Boxing,5,ITA,0.046154
+Breaking,1,USA,0.166667
+Breaking,2,FRA,0.166667
+Breaking,3,CHN,0.166667
+Breaking,4,JPN,0.166667
+Breaking,5,CAN,0.166667
+Canoe Slalom,1,GER,0.2
+Canoe Slalom,2,GBR,0.166667
+Canoe Slalom,3,AUS,0.166667
+Canoe Slalom,4,FRA,0.1
+Canoe Slalom,5,ESP,0.066667
+Canoe Sprint,1,HUN,0.179687
+Canoe Sprint,2,GER,0.15625
+Canoe Sprint,3,ESP,0.085937
+Canoe Sprint,4,NZL,0.085937
+Canoe Sprint,5,CHN,0.070312
+Canoeing,1,GER,0.140034
+Canoeing,2,HUN,0.135739
+Canoeing,3,URS,0.074742
+Canoeing,4,ROU,0.05756
+Canoeing,5,SWE,0.048969
+Cricket,1,GBR,0.875
+Cricket,2,FRA,0.125
+Cricket,3,USA,0.0
+Cricket,4,URS,0.0
+Cricket,5,GER,0.0
+Croquet,1,FRA,1.0
+Croquet,2,USA,0.0
+Croquet,3,GBR,0.0
+Croquet,4,URS,0.0
+Croquet,5,GER,0.0
+Cycling,1,GBR,0.144101
+Cycling,2,FRA,0.119557
+Cycling,3,ITA,0.098179
+Cycling,4,GER,0.074426
+Cycling,5,AUS,0.066508
+Cycling BMX Freestyle,1,GBR,0.25
+Cycling BMX Freestyle,2,USA,0.166667
+Cycling BMX Freestyle,3,AUS,0.166667
+Cycling BMX Freestyle,4,FRA,0.083333
+Cycling BMX Freestyle,5,CHN,0.083333
+Cycling BMX Racing,1,FRA,0.25
+Cycling BMX Racing,2,NED,0.25
+Cycling BMX Racing,3,GBR,0.166667
+Cycling BMX Racing,4,COL,0.166667
+Cycling BMX Racing,5,AUS,0.083333
+Cycling Mountain Bike,1,SUI,0.363636
+Cycling Mountain Bike,2,FRA,0.181818
+Cycling Mountain Bike,3,USA,0.090909
+Cycling Mountain Bike,4,GBR,0.090909
+Cycling Mountain Bike,5,SWE,0.090909
+Cycling Road,1,NED,0.25
+Cycling Road,2,BEL,0.2
+Cycling Road,3,FRA,0.1
+Cycling Road,4,AUS,0.1
+Cycling Road,5,SLO,0.1
+Cycling Track,1,GBR,0.244048
+Cycling Track,2,AUS,0.107143
+Cycling Track,3,NED,0.107143
+Cycling Track,4,GER,0.083333
+Cycling Track,5,ITA,0.083333
+Diving,1,USA,0.294589
+Diving,2,CHN,0.238477
+Diving,3,GER,0.068136
+Diving,4,RUS,0.054108
+Diving,5,GBR,0.052104
+Equestrian,1,GBR,0.284091
+Equestrian,2,GER,0.170455
+Equestrian,3,USA,0.125
+Equestrian,4,FRA,0.125
+Equestrian,5,AUS,0.068182
+Equestrianism,1,GER,0.148187
+Equestrianism,2,USA,0.136788
+Equestrianism,3,SWE,0.088083
+Equestrianism,4,GBR,0.08601
+Equestrianism,5,FRA,0.081865
+Fencing,1,ITA,0.201248
+Fencing,2,FRA,0.176807
+Fencing,3,HUN,0.130525
+Fencing,4,URS,0.075923
+Fencing,5,POL,0.044722
+Figure Skating,1,GBR,0.37037
+Figure Skating,2,SWE,0.222222
+Figure Skating,3,NOR,0.148148
+Figure Skating,4,GER,0.111111
+Figure Skating,5,FIN,0.074074
+Football,1,BRA,0.098522
+Football,2,USA,0.078818
+Football,3,GER,0.067871
+Football,4,ESP,0.052545
+Football,5,URS,0.047619
+Golf,1,USA,0.706897
+Golf,2,GBR,0.068966
+Golf,3,NZL,0.051724
+Golf,4,CHN,0.034483
+Golf,5,JPN,0.034483
+Gymnastics,1,URS,0.12766
+Gymnastics,2,USA,0.085993
+Gymnastics,3,JPN,0.073582
+Gymnastics,4,ROU,0.05984
+Gymnastics,5,NOR,0.053635
+Handball,1,FRA,0.101043
+Handball,2,NOR,0.092221
+Handball,3,DEN,0.084202
+Handball,4,KOR,0.076985
+Handball,5,ESP,0.072975
+Hockey,1,NED,0.177215
+Hockey,2,IND,0.119102
+Hockey,3,AUS,0.118527
+Hockey,4,GER,0.115075
+Hockey,5,GBR,0.104143
+Ice Hockey,1,USA,0.407407
+Ice Hockey,2,CAN,0.296296
+Ice Hockey,3,TCH,0.296296
+Ice Hockey,4,GBR,0.0
+Ice Hockey,5,URS,0.0
+Jeu De Paume,1,GBR,0.666667
+Jeu De Paume,2,USA,0.333333
+Jeu De Paume,3,URS,0.0
+Jeu De Paume,4,GER,0.0
+Jeu De Paume,5,FRA,0.0
+Judo,1,JPN,0.169987
+Judo,2,FRA,0.119522
+Judo,3,KOR,0.081009
+Judo,4,BRA,0.049137
+Judo,5,CUB,0.049137
+Karate,1,TUR,0.125
+Karate,2,JPN,0.09375
+Karate,3,ITA,0.0625
+Karate,4,CHN,0.0625
+Karate,5,ESP,0.0625
+Lacrosse,1,CAN,0.6
+Lacrosse,2,USA,0.2
+Lacrosse,3,GBR,0.2
+Lacrosse,4,URS,0.0
+Lacrosse,5,GER,0.0
+Marathon Swimming,1,HUN,0.25
+Marathon Swimming,2,NED,0.25
+Marathon Swimming,3,GER,0.125
+Marathon Swimming,4,ITA,0.125
+Marathon Swimming,5,AUS,0.125
+Modern Pentathlon,1,HUN,0.20202
+Modern Pentathlon,2,URS,0.136364
+Modern Pentathlon,3,SWE,0.126263
+Modern Pentathlon,4,USA,0.085859
+Modern Pentathlon,5,ITA,0.070707
+Motorboating,1,GBR,0.857143
+Motorboating,2,FRA,0.142857
+Motorboating,3,USA,0.0
+Motorboating,4,URS,0.0
+Motorboating,5,GER,0.0
+Polo,1,GBR,0.447761
+Polo,2,USA,0.179104
+Polo,3,ARG,0.134328
+Polo,4,MEX,0.104478
+Polo,5,ESP,0.074627
+Racquets,1,GBR,1.0
+Racquets,2,USA,0.0
+Racquets,3,URS,0.0
+Racquets,4,GER,0.0
+Racquets,5,FRA,0.0
+Rhythmic Gymnastics,1,RUS,0.267857
+Rhythmic Gymnastics,2,BUL,0.142857
+Rhythmic Gymnastics,3,ITA,0.136905
+Rhythmic Gymnastics,4,BLR,0.130952
+Rhythmic Gymnastics,5,ESP,0.071429
+Roque,1,USA,1.0
+Roque,2,GBR,0.0
+Roque,3,URS,0.0
+Roque,4,GER,0.0
+Roque,5,FRA,0.0
+Rowing,1,USA,0.120012
+Rowing,2,GBR,0.09867
+Rowing,3,GER,0.077946
+Rowing,4,CAN,0.068976
+Rowing,5,ROU,0.061862
+Rugby,1,FRA,0.302469
+Rugby,2,USA,0.222222
+Rugby,3,GBR,0.185185
+Rugby,4,ROU,0.098765
+Rugby,5,GER,0.092593
+Rugby Sevens,1,FIJ,0.230435
+Rugby Sevens,2,NZL,0.217391
+Rugby Sevens,3,FRA,0.113043
+Rugby Sevens,4,CAN,0.113043
+Rugby Sevens,5,RSA,0.113043
+Sailing,1,GBR,0.11635
+Sailing,2,USA,0.107985
+Sailing,3,NOR,0.096578
+Sailing,4,FRA,0.094297
+Sailing,5,SWE,0.091255
+Shooting,1,USA,0.155056
+Shooting,2,SWE,0.095131
+Shooting,3,GBR,0.076404
+Shooting,4,CHN,0.060674
+Shooting,5,NOR,0.057678
+Skateboarding,1,JPN,0.375
+Skateboarding,2,USA,0.208333
+Skateboarding,3,BRA,0.208333
+Skateboarding,4,AUS,0.125
+Skateboarding,5,GBR,0.083333
+Softball,1,USA,0.335196
+Softball,2,AUS,0.335196
+Softball,3,JPN,0.24581
+Softball,4,CHN,0.083799
+Softball,5,GBR,0.0
+Sport Climbing,1,USA,0.166667
+Sport Climbing,2,JPN,0.166667
+Sport Climbing,3,AUT,0.166667
+Sport Climbing,4,CHN,0.111111
+Sport Climbing,5,POL,0.111111
+Surfing,1,BRA,0.25
+Surfing,2,USA,0.166667
+Surfing,3,FRA,0.166667
+Surfing,4,AUS,0.166667
+Surfing,5,JPN,0.166667
+Swimming,1,USA,0.347751
+Swimming,2,AUS,0.145617
+Swimming,3,GER,0.046136
+Swimming,4,GBR,0.045271
+Swimming,5,GDR,0.043829
+Synchronized Swimming,1,RUS,0.251163
+Synchronized Swimming,2,JPN,0.24186
+Synchronized Swimming,3,CHN,0.144186
+Synchronized Swimming,4,USA,0.139535
+Synchronized Swimming,5,CAN,0.12093
+Table Tennis,1,CHN,0.45614
+Table Tennis,2,KOR,0.166667
+Table Tennis,3,JPN,0.100877
+Table Tennis,4,GER,0.087719
+Table Tennis,5,FRA,0.030702
+Taekwondo,1,KOR,0.123153
+Taekwondo,2,CHN,0.064039
+Taekwondo,3,USA,0.054187
+Taekwondo,4,GBR,0.049261
+Taekwondo,5,FRA,0.049261
+Tennis,1,GBR,0.17268
+Tennis,2,USA,0.170103
+Tennis,3,FRA,0.097938
+Tennis,4,ESP,0.059278
+Tennis,5,GER,0.041237
+Trampoline Gymnastics,1,CHN,0.416667
+Trampoline Gymnastics,2,GBR,0.166667
+Trampoline Gymnastics,3,AIN,0.166667
+Trampoline Gymnastics,4,CAN,0.083333
+Trampoline Gymnastics,5,NZL,0.083333
+Trampolining,1,CHN,0.366667
+Trampolining,2,CAN,0.233333
+Trampolining,3,RUS,0.133333
+Trampolining,4,GER,0.066667
+Trampolining,5,UKR,0.066667
+Triathlon,1,GBR,0.25
+Triathlon,2,USA,0.142857
+Triathlon,3,FRA,0.125
+Triathlon,4,SUI,0.107143
+Triathlon,5,AUS,0.089286
+Tug-Of-War,1,GBR,0.347826
+Tug-Of-War,2,SWE,0.165217
+Tug-Of-War,3,USA,0.121739
+Tug-Of-War,4,GER,0.078261
+Tug-Of-War,5,NED,0.069565
+Volleyball,1,USA,0.141197
+Volleyball,2,BRA,0.12958
+Volleyball,3,URS,0.126005
+Volleyball,4,JPN,0.090259
+Volleyball,5,ITA,0.075961
+Water Polo,1,HUN,0.163232
+Water Polo,2,USA,0.145095
+Water Polo,3,ITA,0.098928
+Water Polo,4,URS,0.064303
+Water Polo,5,YUG,0.062655
+Weightlifting,1,CHN,0.097765
+Weightlifting,2,URS,0.086592
+Weightlifting,3,USA,0.064246
+Weightlifting,4,BUL,0.053073
+Weightlifting,5,POL,0.044693
+Wrestling,1,USA,0.100279
+Wrestling,2,URS,0.08078
+Wrestling,3,JPN,0.060585
+Wrestling,4,SWE,0.059889
+Wrestling,5,FIN,0.059192

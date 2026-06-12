@@ -1,0 +1,56 @@
+{
+    "total_cases": 4,
+    "passed_cases": 4,
+    "failed_cases": 0,
+    "cases": [
+        {
+            "probability": 0.84,
+            "noc": "ITA",
+            "sport": "Fencing",
+            "expected_keyword": "SUCCESSO ATTESO",
+            "advice": "SUCCESSO ATTESO: Dominio storico confermato (Dominanza leader: 20.12%).",
+            "reasons": [
+                "Forte tradizione storica nazionale",
+                "Settore competitivo aperto a nuovi talenti",
+                "Solidità statistica del modello ML"
+            ],
+            "passed": true
+        },
+        {
+            "probability": 0.52,
+            "noc": "USA",
+            "sport": "Swimming",
+            "expected_keyword": "TRADIZIONE COMPETITIVA",
+            "advice": "TRADIZIONE COMPETITIVA: La solida storia nazionale sostiene l'atleta nonostante i dati statistici incerti.",
+            "reasons": [
+                "Appartenenza a nazione leader (Superpower)",
+                "Forte tradizione storica nazionale",
+                "Settore competitivo aperto a nuovi talenti"
+            ],
+            "passed": true
+        },
+        {
+            "probability": 0.78,
+            "noc": "CAN",
+            "sport": "Rowing",
+            "expected_keyword": "NUOVA POTENZA",
+            "advice": "NUOVA POTENZA: Trend statistico eccellente in un settore competitivo e fluido.",
+            "reasons": [
+                "Settore competitivo aperto a nuovi talenti",
+                "Solidità statistica del modello ML"
+            ],
+            "passed": true
+        },
+        {
+            "probability": 0.22,
+            "noc": "ITA",
+            "sport": "Basketball",
+            "expected_keyword": "SFIDA ESTREMA",
+            "advice": "SFIDA ESTREMA: Scarsa evidenza statistica e storica per una posizione di podio.",
+            "reasons": [
+                "Performance storiche e recenti insufficienti"
+            ],
+            "passed": true
+        }
+    ]
+}
