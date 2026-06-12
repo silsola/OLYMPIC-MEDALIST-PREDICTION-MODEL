@@ -4,33 +4,6 @@ Combina la potenza predittiva del **Machine Learning** (Python) con il ragioname
 
 ---
 
-## Architettura
-
-```text
-apprendimento_supervisionato/
-  training.py          # Random Forest e Logistic Regression
-  modelli/             # random_forest.pkl, scaler.pkl, mapping Sport/NOC
-  grafici/             # confronto metriche e feature importance
-  iperparametri/       # risultati GridSearch e metriche
-
-apprendimento_probabilistico/
-  training.py          # Naive Bayes per leader storici per sport
-  modelli/             # naive_bayes.pkl, sport_columns_nb.pkl
-  grafici/             # dominanza per sport e ottimizzazione alpha
-  report/              # leader_storici_per_sport.csv, top5_nazioni_per_sport.csv
-
-dataset/
-  dataset_utils.py     # preprocessing condiviso e feature storiche
-  olympics_dataset.csv
-
-kb/
-  rules.pl             # regole del sistema esperto Prolog
-  evaluate_kb.py        # casi di test della Knowledge Base
-
-main.py                # orchestratore finale ML + Prolog
-train_all.py           # training completo dei moduli
-```
-
 ## Installazione
 
 ```bash
