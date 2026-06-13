@@ -14,14 +14,6 @@ Per usare la Knowledge Base serve anche SWI-Prolog installato sul sistema.
 
 ## Training
 
-Per rigenerare tutti i modelli:
-
-```bash
-python3 train_all.py
-```
-
-Oppure separatamente:
-
 ```bash
 python3 apprendimento_supervisionato/training.py
 python3 apprendimento_probabilistico/training.py

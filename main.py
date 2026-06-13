@@ -8,9 +8,9 @@ from thefuzz import process
 
 """
 Modulo principale del Sistema di Predizione Olimpica.
-Questo script funge da orchestratore tra i modelli di apprendimento supervisionato
-(Random Forest e Gradient Boosting), probabilistico (Naive Bayes) e la Base di Conoscenza 
-(KB) in Prolog. Gestisce l'interazione con l'utente tramite interfaccia testuale.
+Questo script funge da orchestratore tra i modelli di apprendimento supervisionato,
+probabilistico e la Base di Conoscenza (KB) in Prolog.
+Gestisce l'interazione con l'utente tramite interfaccia testuale.
 """
 
 warnings.filterwarnings("ignore", category=UserWarning)
@@ -87,7 +87,7 @@ def get_input_validato(messaggio, tipo, opzioni=None):
 
 def load_resources():
     """
-    Carica i modelli serializzati (incluso il Gradient Boosting) e i file di supporto.
+    Carica i modelli serializzati e i file di supporto.
     """
     path_supervisionato = os.path.join(BASE_PATH, 'apprendimento_supervisionato', 'modelli')
     path_probabilistico = os.path.join(BASE_PATH, 'apprendimento_probabilistico', 'modelli')
@@ -95,7 +95,7 @@ def load_resources():
     try:
         return {
             "rf_model": joblib.load(os.path.join(path_supervisionato, 'random_forest.pkl')),
-            "gb_model": joblib.load(os.path.join(path_supervisionato, 'gradient_boosting.pkl')), # <--- Caricamento Gradient Boosting
+            "gb_model": joblib.load(os.path.join(path_supervisionato, 'gradient_boosting.pkl')),
             "scaler": joblib.load(os.path.join(path_supervisionato, 'scaler.pkl')),
             "sport_map": _normalizza_mapping(joblib.load(os.path.join(path_supervisionato, 'sport_mapping.pkl'))),
             "noc_map": _normalizza_mapping(joblib.load(os.path.join(path_supervisionato, 'noc_mapping.pkl'))),
@@ -261,7 +261,7 @@ def main():
         u_sport_id = sport_to_id[u_sport_str]
         u_noc_id = noc_to_id[u_noc_str]
 
-        # Costruzione e scaling delle feature
+        
         atleta_df, history_source = build_athlete_dataframe(res, u_sex, u_noc_id, u_sport_id)
         atleta_scaled = res['scaler'].transform(atleta_df)
         
@@ -275,10 +275,8 @@ def main():
         # Analisi probabilistica settoriale del Naive Bayes
         leader_noc, dominanza = find_sector_leader(res, u_sport_str)
         
-        # Interrogazione del motore di inferenza logica Prolog
         advice, reasons = get_olympic_advice_detailed(prob_combinata, u_noc_str, u_sport_str, res['kb_path'])
         
-        # Output dei dati unificati
         print_results(prob_rf, prob_gb, u_sport_str, leader_noc, dominanza, history_source, advice, reasons)
 
         continua = input("[?] Vuoi analizzare un altro atleta? (S/N): ").strip().upper()
