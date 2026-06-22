@@ -59,7 +59,7 @@ Il sistema richiede:
 
 Output prodotto:
 
-- probabilità di podio stimata dal Random Forest
+- probabilità di podio stimata dal Random Forest e dal Gradient Boosting
 - contesto storico usato dal modello
 - leader storico/probabilistico dello sport tramite Naive Bayes
 - consiglio strategico generato dalla Knowledge Base Prolog

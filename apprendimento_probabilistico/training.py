@@ -22,7 +22,6 @@ Questo script gestisce l'ottimizzazione degli iperparametri tramite Grid Search,
 dei grafici di dominanza stocastica e l'esportazione automatica dello scatter plot di validazione.
 """
 
-# Configurazione percorsi del progetto
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.abspath(os.path.join(CURRENT_DIR, '..'))
 DATASET_PATH = os.path.join(PROJECT_ROOT, 'dataset', 'olympics_dataset.csv')
