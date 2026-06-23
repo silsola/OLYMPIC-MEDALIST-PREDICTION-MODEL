@@ -1,28 +1,31 @@
-:- module(olympics_rules, [
+:- module(rules, [
+    historical_elite/3,
+    is_superpower/1,
+    sector_type/2,
     olympic_advice/4,
+    reason/4,
     explain_verdict/4
 ]).
 
 /** <module> Knowledge Base per Predizione Medaglie Olimpiche
 
     Questo modulo implementa un sistema esperto ibrido. Integra le predizioni
-    probabilistiche di un modello Random Forest con una base di conoscenza
-    simbolica per fornire analisi contestualizzate e spiegabili.
+    probabilistiche con una base di conoscenza simbolica
+    per fornire analisi contestualizzate e spiegabili.
 */
 
 % --- DIRETTIVE DI SISTEMA ---
-% Informano il compilatore che i fatti o le clausole dei seguenti predicati
-% possono essere non consecutivi all'interno del file, evitando warning in compilazione.
 :- discontiguous historical_elite/3.
 :- discontiguous reason/4.
 
 
-% =============================================================================
-% --- 1. FATTI STATICI ---
-% =============================================================================
-
 /** historical_elite(?NOC, ?Sport, -Dominance)
+    
     Rappresenta le nazioni leader e il loro peso percentuale nel medagliere storico.
+    
+    @param NOC Codice del comitato olimpico nazionale dell'atleta (es. 'ITA').
+    @param Sport Denominazione della disciplina olimpica analizzata.
+    @param Dominance Valore percentuale che esprime il tasso di vittoria storica della nazione.
 */
 historical_elite('ITA', 'Fencing', 20.12).
 historical_elite('USA', 'Swimming', 34.80).
@@ -33,31 +36,32 @@ historical_elite('JPN', 'Judo', 38.00).
 historical_elite('BRA', 'Football', 25.00).
 
 
-% =============================================================================
-% --- 2. REGOLE AUSILIARIE ---
-% =============================================================================
-
 /** is_superpower(+NOC)
+    
     Vero se la nazione possiede una struttura d'élite radicata in più settori (almeno 2).
+    
+    @param NOC Codice del comitato olimpico nazionale da verificare.
 */
 is_superpower(NOC) :- 
     findall(S, historical_elite(NOC, S, _), L),
     length(L, N), N >= 2.
 
+
 /** sector_type(+Sport, -Type)
+    
     Definisce la fluidità di un settore (open/closed) in base alla dominanza del leader storico.
     Se la dominanza del leader supera il 40%, il settore viene considerato chiuso (blindato).
+    
+    @param Sport Denominazione della disciplina olimpica analizzata.
+    @param Type Categoria di fluidità associata al settore (open oppure closed).
 */
 sector_type(Sport, closed) :- 
     historical_elite(_, Sport, Dominance), Dominance > 40.0, !.
 sector_type(_, open).
 
 
-% =============================================================================
-% --- 3. REGOLE DI INFERENZA PRINCIPALI ---
-% =============================================================================
-
 /** olympic_advice(+Probability, +NOC, +Sport, -Advice)
+    
     Predicato principale deputato a generare il verdetto finale testuale.
     Sfrutta l'operatore di Cut (!) per garantire l'esclusività dei rami inferenziali.
     
@@ -66,7 +70,6 @@ sector_type(_, open).
     @param Sport Denominazione della disciplina olimpica analizzata.
     @param Advice Stringa di testo contenente il verdetto predittivo finale.
 */
-
 % Caso A: Eccellenza Storica Confermata (Il modello ML e la KB concordano)
 olympic_advice(Prob, NOC, Sport, Advice) :-
     Prob >= 0.70,
@@ -98,12 +101,14 @@ olympic_advice(Prob, _, _, "SCOMMESSA: Segnali promettenti, ma contesto privo di
 olympic_advice(_, _, _, "SFIDA ESTREMA: Scarsa evidenza statistica e storica per una posizione di podio.").
 
 
-% =============================================================================
-% --- 4. GENERAZIONE MOTIVAZIONI (EXPLAINABLE AI) ---
-% =============================================================================
-
 /** reason(+Probability, +NOC, +Sport, -Message)
-    Predicato interno che mappa i singoli prerequisiti atomici soddisfatti.
+    
+    Predicato interno che mappa i singoli prerequisiti atomici soddisfatti per la spiegazione.
+    
+    @param Probability Valore float da 0 a 1 generato dal modello Random Forest.
+    @param NOC Codice del comitato olimpico nazionale dell'atleta.
+    @param Sport Denominazione della disciplina olimpica.
+    @param Message Stringa testuale contenente la singola motivazione estratta.
 */
 reason(Prob, _, _, 'Solidità statistica del modello ML') :-
     Prob >= 0.70.
@@ -123,7 +128,8 @@ reason(Prob, _, _, 'Performance storiche e recenti insufficienti') :-
 
 
 /** explain_verdict(+Probability, +NOC, +Sport, -Reasons)
-    Genera l'insieme aggregato e univoco di stringhe motivazionali a supporto della decisione.
+    
+    Genera l'insieme aggregato e univoco di stringhe motivazionali a supporto della decisione (Explainable AI).
     Utilizza findall/3 per accumulare i messaggi e sort/2 per rimuovere i duplicati.
     
     @param Probability Valore float da 0 a 1 generato dal modello statistico.

@@ -14,17 +14,103 @@
 
 <p>
 Questo modulo implementa un sistema esperto ibrido. Integra le predizioni
-probabilistiche di un modello Random Forest con una base di conoscenza
-simbolica per fornire analisi contestualizzate e spiegabili.</p>
+probabilistiche con una base di conoscenza simbolica
+per fornire analisi contestualizzate e spiegabili.</p>
 
-<h2 class="undoc">Undocumented predicates</h2>
+<dl>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="historical_elite/3"><b class="pred">historical_elite</b><var class="arglist">(?NOC, ?Sport, -Dominance)</var></a></dt><dd class="defbody">Rappresenta le nazioni leader e il loro peso percentuale nel medagliere storico.
 
-<p>
-The following predicates are exported, but not or incorrectly documented.</p>
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
 
-<dl class="undoc">
-<dt class="undoc"><span style="float:right">&nbsp;</span><a name="explain_verdict/4"><b class="pred">explain_verdict</b><var class="arglist">(Arg1, Arg2, Arg3, Arg4)</var></a></dt>
-<dt class="undoc"><span style="float:right">&nbsp;</span><a name="olympic_advice/4"><b class="pred">olympic_advice</b><var class="arglist">(Arg1, Arg2, Arg3, Arg4)</var></a></dt>
+<table class="arglist">
+<tr><td><var>NOC</var></td><td class="argdescr">- Codice del comitato olimpico nazionale dell'atleta (es. 'ITA').</td></tr>
+<tr><td><var>Sport</var></td><td class="argdescr">- Denominazione della disciplina olimpica analizzata.</td></tr>
+<tr><td><var>Dominance</var></td><td class="argdescr">- Valore percentuale che esprime il tasso di vittoria storica della nazione.</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="is_superpower/1"><b class="pred">is_superpower</b><var class="arglist">(+NOC)</var></a></dt><dd class="defbody">Vero se la nazione possiede una struttura d'élite radicata in più settori (almeno 2).
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>NOC</var></td><td class="argdescr">- Codice del comitato olimpico nazionale da verificare.</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="sector_type/2"><b class="pred">sector_type</b><var class="arglist">(+Sport, -Type)</var></a></dt><dd class="defbody">Definisce la fluidità di un settore (open/closed) in base alla dominanza del leader storico.
+Se la dominanza del leader supera il 40%, il settore viene considerato chiuso (blindato).
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Sport</var></td><td class="argdescr">- Denominazione della disciplina olimpica analizzata.</td></tr>
+<tr><td><var>Type</var></td><td class="argdescr">- Categoria di fluidità associata al settore (open oppure closed).</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="olympic_advice/4"><b class="pred">olympic_advice</b><var class="arglist">(+Probability, +NOC, +Sport, -Advice)</var></a></dt><dd class="defbody">Predicato principale deputato a generare il verdetto finale testuale.
+Sfrutta l'operatore di Cut (!) per garantire l'esclusività dei rami inferenziali.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Probability</var></td><td class="argdescr">- Valore float da 0 a 1 generato dal modello Random Forest.</td></tr>
+<tr><td><var>NOC</var></td><td class="argdescr">- Codice del comitato olimpico nazionale dell'atleta (es. 'ITA').</td></tr>
+<tr><td><var>Sport</var></td><td class="argdescr">- Denominazione della disciplina olimpica analizzata.</td></tr>
+<tr><td><var>Advice</var></td><td class="argdescr">- Stringa di testo contenente il verdetto predittivo finale.</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="reason/4"><b class="pred">reason</b><var class="arglist">(+Probability, +NOC, +Sport, -Message)</var></a></dt><dd class="defbody">Predicato interno che mappa i singoli prerequisiti atomici soddisfatti per la spiegazione.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Probability</var></td><td class="argdescr">- Valore float da 0 a 1 generato dal modello Random Forest.</td></tr>
+<tr><td><var>NOC</var></td><td class="argdescr">- Codice del comitato olimpico nazionale dell'atleta.</td></tr>
+<tr><td><var>Sport</var></td><td class="argdescr">- Denominazione della disciplina olimpica.</td></tr>
+<tr><td><var>Message</var></td><td class="argdescr">- Stringa testuale contenente la singola motivazione estratta.</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="explain_verdict/4"><b class="pred">explain_verdict</b><var class="arglist">(+Probability, +NOC, +Sport, -Reasons)</var></a></dt><dd class="defbody">Genera l'insieme aggregato e univoco di stringhe motivazionali a supporto della decisione (Explainable AI).
+Utilizza <a class="builtin" href="http://www.swi-prolog.org/pldoc/man?predicate=findall/3">findall/3</a> per accumulare i messaggi e <a class="builtin" href="http://www.swi-prolog.org/pldoc/man?predicate=sort/2">sort/2</a> per rimuovere i duplicati.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Probability</var></td><td class="argdescr">- Valore float da 0 a 1 generato dal modello statistico.</td></tr>
+<tr><td><var>NOC</var></td><td class="argdescr">- Codice del comitato olimpico nazionale dell'atleta.</td></tr>
+<tr><td><var>Sport</var></td><td class="argdescr">- Denominazione della disciplina olimpica.</td></tr>
+<tr><td><var>Reasons</var></td><td class="argdescr">- Lista contenente l'insieme unico delle spiegazioni estratte.</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
 </dl>
 
 </body>
