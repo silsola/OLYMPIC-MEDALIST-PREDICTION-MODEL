@@ -17,7 +17,9 @@
 :- discontiguous reason/4.
 
 
+% =============================================================================
 % --- 1. FATTI STATICI ---
+% =============================================================================
 
 /** historical_elite(?NOC, ?Sport, -Dominance)
     Rappresenta le nazioni leader e il loro peso percentuale nel medagliere storico.
@@ -31,7 +33,9 @@ historical_elite('JPN', 'Judo', 38.00).
 historical_elite('BRA', 'Football', 25.00).
 
 
+% =============================================================================
 % --- 2. REGOLE AUSILIARIE ---
+% =============================================================================
 
 /** is_superpower(+NOC)
     Vero se la nazione possiede una struttura d'élite radicata in più settori (almeno 2).
@@ -49,11 +53,18 @@ sector_type(Sport, closed) :-
 sector_type(_, open).
 
 
+% =============================================================================
 % --- 3. REGOLE DI INFERENZA PRINCIPALI ---
+% =============================================================================
 
 /** olympic_advice(+Probability, +NOC, +Sport, -Advice)
     Predicato principale deputato a generare il verdetto finale testuale.
     Sfrutta l'operatore di Cut (!) per garantire l'esclusività dei rami inferenziali.
+    
+    @param Probability Valore float da 0 a 1 generato dal modello Random Forest.
+    @param NOC Codice del comitato olimpico nazionale dell'atleta (es. 'ITA').
+    @param Sport Denominazione della disciplina olimpica analizzata.
+    @param Advice Stringa di testo contenente il verdetto predittivo finale.
 */
 
 % Caso A: Eccellenza Storica Confermata (Il modello ML e la KB concordano)
@@ -87,7 +98,9 @@ olympic_advice(Prob, _, _, "SCOMMESSA: Segnali promettenti, ma contesto privo di
 olympic_advice(_, _, _, "SFIDA ESTREMA: Scarsa evidenza statistica e storica per una posizione di podio.").
 
 
+% =============================================================================
 % --- 4. GENERAZIONE MOTIVAZIONI (EXPLAINABLE AI) ---
+% =============================================================================
 
 /** reason(+Probability, +NOC, +Sport, -Message)
     Predicato interno che mappa i singoli prerequisiti atomici soddisfatti.
@@ -112,6 +125,11 @@ reason(Prob, _, _, 'Performance storiche e recenti insufficienti') :-
 /** explain_verdict(+Probability, +NOC, +Sport, -Reasons)
     Genera l'insieme aggregato e univoco di stringhe motivazionali a supporto della decisione.
     Utilizza findall/3 per accumulare i messaggi e sort/2 per rimuovere i duplicati.
+    
+    @param Probability Valore float da 0 a 1 generato dal modello statistico.
+    @param NOC Codice del comitato olimpico nazionale dell'atleta.
+    @param Sport Denominazione della disciplina olimpica.
+    @param Reasons Lista contenente l'insieme unico delle spiegazioni estratte.
 */
 explain_verdict(Prob, NOC, Sport, Reasons) :-
     findall(M, reason(Prob, NOC, Sport, M), RawReasons),
